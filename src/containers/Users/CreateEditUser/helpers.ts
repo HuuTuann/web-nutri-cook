@@ -1,0 +1,30 @@
+import { UsersKey, UserPayload } from "@/queries";
+import { z } from "zod";
+
+export const userSchema = z.object({
+  [UsersKey.USERNAME]: z.string().nonempty({
+    message: "Username is required",
+  }),
+  [UsersKey.EMAIL]: z.string().email(),
+  [UsersKey.FULL_NAME]: z.string().nonempty({
+    message: "Full name is required",
+  }),
+  [UsersKey.AGE]: z.number().int().positive(),
+  [UsersKey.GENDER]: z.string().nonempty({}),
+  [UsersKey.WEIGHT]: z.number().int().positive(),
+  [UsersKey.HEIGHT]: z.number().int().positive(),
+  [UsersKey.GOAL]: z.string().nonempty({}),
+});
+
+export const defaultValues: UserPayload = {
+  [UsersKey.USERNAME]: "",
+  [UsersKey.PASSWORD]: "",
+  [UsersKey.EMAIL]: "",
+  [UsersKey.FULL_NAME]: "",
+  [UsersKey.AGE]: 0,
+  [UsersKey.GENDER]: "",
+  [UsersKey.WEIGHT]: 0,
+  [UsersKey.HEIGHT]: 0,
+  [UsersKey.GOAL]: "",
+  [UsersKey.ROLE]: "user",
+};
