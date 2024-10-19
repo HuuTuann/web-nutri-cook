@@ -1,0 +1,3 @@
+[submodule "src/modules/web-feature-shared"]
+	path = src/modules/web-feature-shared
+	url = https://github.com/HuuTuann/web-feature-shared.git
