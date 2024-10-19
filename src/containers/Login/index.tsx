@@ -26,7 +26,6 @@ export const Login = () => {
   const { onLogin } = useLogin();
 
   const onSubmit = (data: LoginPayload) => {
-    console.log(data);
     onLogin(data, {
       onSuccess: () => {
         toastify.success("Login success");
@@ -37,22 +36,18 @@ export const Login = () => {
         toastify.error("Login failed");
       },
     });
-
-    // toastify.success("Login success");
-    // setAdminCookie("", 111111);
-    // router.push("/users");
   };
 
   return (
     <Flex vertical={true} className="w-96">
       <Form layout="vertical">
         <Form.Item
-          label="Email"
-          validateStatus={errors[AuthKey.EMAIL] ? "error" : ""}
-          help={errors[AuthKey.EMAIL]?.message ?? ""}
+          label="Username"
+          validateStatus={errors[AuthKey.USERNAME] ? "error" : ""}
+          help={errors[AuthKey.USERNAME]?.message ?? ""}
         >
           <Controller
-            name={AuthKey.EMAIL}
+            name={AuthKey.USERNAME}
             control={control}
             render={({ field }) => <Input {...field} />}
           />

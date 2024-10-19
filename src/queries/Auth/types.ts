@@ -1,9 +1,9 @@
 export enum AuthKey {
-  EMAIL = "email",
+  USERNAME = "username",
   PASSWORD = "password",
 }
 
 export interface LoginPayload {
-  [AuthKey.EMAIL]: string;
+  [AuthKey.USERNAME]: string;
   [AuthKey.PASSWORD]: string;
 }
