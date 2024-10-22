@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "init:modules": "bash init-modules.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
