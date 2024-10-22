@@ -1,7 +1,7 @@
 "use client";
 
 import { initialValues, loginSchema } from "./helpers";
-import { AuthKey, LoginPayload, useLogin } from "@/queries";
+import { AuthKey, LoginPayload, LoginResponse, useLogin } from "@/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Form, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
@@ -23,19 +23,19 @@ export const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const { onLogin } = useLogin();
+  const { onLogin } = useLogin({
+    onSuccess: (data) => {
+      setAdminCookie((data as LoginResponse)?.data?.token, 7);
+      toastify.success("Login success");
+      router.push("/users");
+    },
+    onError: () => {
+      toastify.error("Login failed");
+    },
+  });
 
   const onSubmit = (data: LoginPayload) => {
-    onLogin(data, {
-      onSuccess: () => {
-        toastify.success("Login success");
-        setAdminCookie("", 111111);
-        router.push("/users");
-      },
-      onError: () => {
-        toastify.error("Login failed");
-      },
-    });
+    onLogin(data);
   };
 
   return (
