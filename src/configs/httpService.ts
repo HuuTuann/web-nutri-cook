@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { getAdminCookie } from "./accountService";
 import axios from "axios";
+import { getAdminCookie } from "@/modules/web-feature-shared";
+import { isEmpty } from "lodash";
 
 const publicPaths = ["/login"];
 
@@ -17,9 +17,8 @@ httpService.interceptors.request.use(
 
     const isPublicPath = publicPaths.some((path) => config.url?.includes(path));
 
-    if (!isPublicPath && !token) {
-      const router = useRouter();
-      router.push("/login");
+    if (!isPublicPath && isEmpty(token)) {
+      window.location.href = "/login";
       return Promise.reject("Unauthorized");
     }
 
@@ -35,11 +34,10 @@ httpService.interceptors.request.use(
 );
 
 httpService.interceptors.response.use(
-  (response) => response,
+  (response) => response?.data,
   (error) => {
-    if (error.response.status === 401) {
-      const router = useRouter();
-      router.push("/login");
+    if (error?.response?.status === 401) {
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   },

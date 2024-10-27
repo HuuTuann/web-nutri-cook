@@ -1,3 +1,5 @@
+import Dotenv from "dotenv-webpack";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
@@ -8,6 +10,10 @@ const nextConfig = {
         permanent: true,
       },
     ];
+  },
+  webpack: (config) => {
+    config.plugins.push(new Dotenv());
+    return config;
   },
 };
 

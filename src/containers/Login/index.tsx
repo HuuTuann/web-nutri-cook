@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Form, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { setAdminCookie } from "@/configs/accountService";
 import { useToastify } from "@/hooks/useToastify";
+import { setAdminCookie } from "@/modules/web-feature-shared";
 
 export const Login = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ export const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const { onLogin } = useLogin({
+  const { onLogin, isLoadingLogin } = useLogin({
     onSuccess: (data) => {
       setAdminCookie((data as LoginResponse)?.data?.token, 7);
       toastify.success("Login success");
@@ -49,7 +49,7 @@ export const Login = () => {
           <Controller
             name={AuthKey.USERNAME}
             control={control}
-            render={({ field }) => <Input {...field} />}
+            render={({ field }) => <Input placeholder="Username" {...field} />}
           />
         </Form.Item>
         <Form.Item
@@ -60,7 +60,9 @@ export const Login = () => {
           <Controller
             name={AuthKey.PASSWORD}
             control={control}
-            render={({ field }) => <Input.Password {...field} />}
+            render={({ field }) => (
+              <Input.Password placeholder="Password" {...field} />
+            )}
           />
         </Form.Item>
       </Form>
@@ -68,6 +70,7 @@ export const Login = () => {
         size="large"
         type="primary"
         className="mt-8 w-full"
+        loading={isLoadingLogin}
         onClick={handleSubmit(onSubmit)}
       >
         Login

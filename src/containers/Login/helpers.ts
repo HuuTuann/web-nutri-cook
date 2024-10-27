@@ -7,6 +7,6 @@ export const loginSchema = z.object({
 });
 
 export const initialValues: LoginPayload = {
-  [AuthKey.USERNAME]: "",
-  [AuthKey.PASSWORD]: "",
+  [AuthKey.USERNAME]: "admin",
+  [AuthKey.PASSWORD]: "12345678",
 };
