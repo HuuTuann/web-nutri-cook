@@ -1,3 +1,6 @@
 {
-  "cSpell.words": ["Nutri"]
+  "cSpell.words": ["Nutri"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
 }

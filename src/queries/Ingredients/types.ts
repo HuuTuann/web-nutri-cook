@@ -1,16 +1,17 @@
 export enum IngredientKey {
-  ID = "id",
-  NAME = "name",
-  TYPE = "type",
-  DESCRIPTION = "description",
+  ID = "ingredient_ID",
+  NAME = "ingredientName",
+  TYPE = "ingredientType",
+  DESCRIPTION = "ingredientDescription",
   CALORIES = "calories",
   PROTEIN = "protein",
   FAT = "fat",
   CARBS = "carbs",
+  IMAGE_URL = "imageURL",
+  UNIT = "unit",
 }
 
-export interface IngredientResponse {
-  [IngredientKey.ID]: string;
+export interface IngredientPayload {
   [IngredientKey.NAME]: string;
   [IngredientKey.TYPE]: string;
   [IngredientKey.DESCRIPTION]: string;
@@ -18,4 +19,10 @@ export interface IngredientResponse {
   [IngredientKey.PROTEIN]: number;
   [IngredientKey.FAT]: number;
   [IngredientKey.CARBS]: number;
+  [IngredientKey.IMAGE_URL]: string;
+  [IngredientKey.UNIT]: string;
+}
+
+export interface IngredientResponse extends IngredientPayload {
+  [IngredientKey.ID]: string;
 }
