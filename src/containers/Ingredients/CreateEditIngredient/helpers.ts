@@ -2,17 +2,43 @@ import { IngredientPayload, IngredientKey } from "@/queries";
 import { z } from "zod";
 
 export const ingredientSchema = z.object({
-  // [IngredientKey.IMAGE_URL]: z.string().nonempty("Image is required"),
+  [IngredientKey.NAME]: z.string().nonempty({
+    message: "Name is required",
+  }),
+  [IngredientKey.TYPE]: z.string().nonempty({
+    message: "Type is required",
+  }),
+  [IngredientKey.CALORIES]: z.number().positive({
+    message: "Calories must be more than 0",
+  }),
+  [IngredientKey.PROTEIN]: z.number().positive({
+    message: "Protein must be more than 0",
+  }),
+  [IngredientKey.FAT]: z.number().positive({
+    message: "Fat must be more than 0",
+  }),
+  [IngredientKey.CARBS]: z.number().positive({
+    message: "Carbs must be more than 0",
+  }),
+  [IngredientKey.IMAGE_URL]: z.string().nonempty({
+    message: "Image is required",
+  }),
+  [IngredientKey.UNIT]: z.string().nonempty({
+    message: "Unit is required",
+  }),
+  [IngredientKey.DESCRIPTION]: z.string(),
 });
 
-export const defaultValues: IngredientPayload = {
-  [IngredientKey.NAME]: "",
-  [IngredientKey.TYPE]: "",
-  [IngredientKey.DESCRIPTION]: "",
-  [IngredientKey.CALORIES]: 0,
-  [IngredientKey.PROTEIN]: 0,
-  [IngredientKey.FAT]: 0,
-  [IngredientKey.CARBS]: 0,
-  [IngredientKey.IMAGE_URL]: "",
-  [IngredientKey.UNIT]: "",
+export const getDefaultValue = (ingredient?: IngredientPayload) => {
+  return {
+    [IngredientKey.NAME]: ingredient?.[IngredientKey.NAME] || "",
+    [IngredientKey.TYPE]: ingredient?.[IngredientKey.TYPE] || "",
+    [IngredientKey.DESCRIPTION]: ingredient?.[IngredientKey.DESCRIPTION] || "",
+    [IngredientKey.CALORIES]: ingredient?.[IngredientKey.CALORIES] || 0,
+    [IngredientKey.PROTEIN]: ingredient?.[IngredientKey.PROTEIN] || 0,
+    [IngredientKey.FAT]: ingredient?.[IngredientKey.FAT] || 0,
+    [IngredientKey.CARBS]: ingredient?.[IngredientKey.CARBS] || 0,
+    [IngredientKey.IMAGE_URL]: ingredient?.[IngredientKey.IMAGE_URL] || "",
+    [IngredientKey.UNIT]: ingredient?.[IngredientKey.UNIT] || "",
+  };
 };

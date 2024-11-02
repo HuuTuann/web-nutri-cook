@@ -1,6 +1,6 @@
 "use client";
 
-import { getAdminCookie } from "@/configs/accountService";
+import { getAdminCookie } from "@/modules/web-feature-shared";
 import { Login } from "@/containers";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/navigation";

@@ -5,11 +5,13 @@ import {
   IngredientPayload,
   useCreateIngredient,
   useGetAllIngredient,
+  useGetIngredientById,
+  useUpdateIngredientById,
 } from "@/queries";
 import { Button, Flex, Form, Image, Input } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { defaultValues } from "./helpers";
+import { getDefaultValue, ingredientSchema } from "./helpers";
 import { useToastify } from "@/hooks/useToastify";
 import { isEmpty, pickBy } from "lodash";
 import {
@@ -21,15 +23,20 @@ import {
 } from "@/modules/web-feature-shared";
 import { DeleteOutlined } from "@ant-design/icons";
 import "./styles.scss";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
   content: React.ReactNode;
-  isEdit?: boolean;
+  id?: string;
 };
 
-export const CreateEditIngredient = ({ content, isEdit }: Props) => {
+export const CreateEditIngredient = ({ content, id }: Props) => {
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
+
+  const { ingredient } = useGetIngredientById({
+    id,
+  });
 
   const {
     control,
@@ -39,11 +46,17 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IngredientPayload>({
-    defaultValues,
+    defaultValues: getDefaultValue(ingredient),
     mode: "onSubmit",
     reValidateMode: "onChange",
-    // resolver: zodResolver(ingredientSchema),
+    resolver: zodResolver(ingredientSchema),
   });
+
+  useEffect(() => {
+    if (ingredient) {
+      reset(getDefaultValue(ingredient));
+    }
+  }, [ingredient, reset]);
 
   const showModal = () => {
     setOpen(true);
@@ -51,7 +64,7 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
 
   const handleCloseModal = () => {
     setOpen(false);
-    reset(defaultValues);
+    reset(getDefaultValue());
   };
 
   const { handleInvalidateIngredient } = useGetAllIngredient();
@@ -69,8 +82,25 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
     },
   );
 
+  const { onUpdateIngredientById, isLoadingUpdateIngredientById } =
+    useUpdateIngredientById({
+      onSuccess: () => {
+        handleCloseModal();
+        handleInvalidateIngredient();
+        toastify.success("Update ingredient success!");
+      },
+      onError: () => {
+        toastify.error("Something went wrong! Please try again.");
+      },
+    });
+
   const handleOk = (data: IngredientPayload) => {
     const payload = pickBy(data) as unknown as IngredientPayload;
+    if (id) {
+      onUpdateIngredientById({ ...payload, [IngredientKey.ID]: id });
+      return;
+    }
+
     onCreateIngredient(payload);
   };
 
@@ -82,11 +112,13 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
     <>
       <Flex onClick={showModal}>{content}</Flex>
       <Modal
-        title={isEdit ? "Edit Ingredient" : "Create Ingredient"}
+        title={id ? "Edit Ingredient" : "Create Ingredient"}
         open={open}
         onOk={handleSubmit(handleOk)}
         onCancel={handleCloseModal}
-        confirmLoading={isLoadingCreateIngredient}
+        confirmLoading={
+          isLoadingCreateIngredient || isLoadingUpdateIngredientById
+        }
       >
         <Form layout="vertical">
           <Row>
@@ -125,6 +157,7 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
                 label="Unit"
                 validateStatus={errors[IngredientKey.UNIT] ? "error" : ""}
                 help={errors[IngredientKey.UNIT]?.message ?? ""}
+                required
               >
                 <Controller
                   name={IngredientKey.UNIT}
@@ -140,11 +173,14 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
                 label="Calories"
                 validateStatus={errors[IngredientKey.CALORIES] ? "error" : ""}
                 help={errors[IngredientKey.CALORIES]?.message ?? ""}
+                required
               >
                 <Controller
                   name={IngredientKey.CALORIES}
                   control={control}
-                  render={({ field }) => <InputNumber {...field} />}
+                  render={({ field }) => (
+                    <InputNumber suffix="g (s)" {...field} />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -153,11 +189,14 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
                 label="Protein"
                 validateStatus={errors[IngredientKey.PROTEIN] ? "error" : ""}
                 help={errors[IngredientKey.PROTEIN]?.message ?? ""}
+                required
               >
                 <Controller
                   name={IngredientKey.PROTEIN}
                   control={control}
-                  render={({ field }) => <InputNumber {...field} />}
+                  render={({ field }) => (
+                    <InputNumber suffix="g (s)" {...field} />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -168,11 +207,14 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
                 label="Fat"
                 validateStatus={errors[IngredientKey.FAT] ? "error" : ""}
                 help={errors[IngredientKey.FAT]?.message ?? ""}
+                required
               >
                 <Controller
                   name={IngredientKey.FAT}
                   control={control}
-                  render={({ field }) => <InputNumber {...field} />}
+                  render={({ field }) => (
+                    <InputNumber suffix="g (s)" {...field} />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -181,16 +223,13 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
                 label="Carbs"
                 validateStatus={errors[IngredientKey.CARBS] ? "error" : ""}
                 help={errors[IngredientKey.CARBS]?.message ?? ""}
+                required
               >
                 <Controller
                   name={IngredientKey.CARBS}
                   control={control}
                   render={({ field }) => (
-                    <InputNumber
-                      suffix="Kg (s)"
-                      style={{ width: "100%" }}
-                      {...field}
-                    />
+                    <InputNumber suffix="g (s)" {...field} />
                   )}
                 />
               </Form.Item>
@@ -232,6 +271,7 @@ export const CreateEditIngredient = ({ content, isEdit }: Props) => {
                     errors[IngredientKey.IMAGE_URL] ? "error" : ""
                   }
                   help={errors[IngredientKey.IMAGE_URL]?.message ?? ""}
+                  required
                 >
                   <Controller
                     name={IngredientKey.IMAGE_URL}

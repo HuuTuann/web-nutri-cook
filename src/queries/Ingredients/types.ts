@@ -12,6 +12,7 @@ export enum IngredientKey {
 }
 
 export interface IngredientPayload {
+  [IngredientKey.ID]: string;
   [IngredientKey.NAME]: string;
   [IngredientKey.TYPE]: string;
   [IngredientKey.DESCRIPTION]: string;
@@ -21,8 +22,4 @@ export interface IngredientPayload {
   [IngredientKey.CARBS]: number;
   [IngredientKey.IMAGE_URL]: string;
   [IngredientKey.UNIT]: string;
-}
-
-export interface IngredientResponse extends IngredientPayload {
-  [IngredientKey.ID]: string;
 }
