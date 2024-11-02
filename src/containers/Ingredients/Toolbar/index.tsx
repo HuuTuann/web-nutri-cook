@@ -9,7 +9,7 @@ export const Toolbar = () => {
   const { handleInvalidateIngredient } = useGetAllIngredient();
 
   return (
-    <Flex justify="end" gap={4}>
+    <Flex justify="end" gap={8}>
       <Tooltip title="Refresh">
         <Button
           type="default"
