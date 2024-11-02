@@ -1,5 +1,8 @@
 import axios from "axios";
-import { getAdminCookie } from "@/modules/web-feature-shared";
+import {
+  getAdminCookie,
+  removeAdminCookie,
+} from "@/modules/web-feature-shared";
 import { isEmpty } from "lodash";
 
 const publicPaths = ["/login"];
@@ -37,6 +40,7 @@ httpService.interceptors.response.use(
   (response) => response?.data,
   (error) => {
     if (error?.response?.status === 401) {
+      removeAdminCookie();
       window.location.href = "/login";
     }
     return Promise.reject(error);

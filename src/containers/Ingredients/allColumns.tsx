@@ -1,10 +1,14 @@
+import { DeleteIngredient } from "./Actions/DeleteIngredient";
+import { CreateEditIngredient } from "./CreateEditIngredient";
 import { formatValueOrNull } from "@/lib/utils";
-import { IngredientKey, IngredientResponse } from "@/queries";
-import { Image } from "antd";
+import { Button } from "@/modules/web-feature-shared";
+import { IngredientKey, IngredientPayload } from "@/queries";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Flex, Image } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { isEmpty } from "lodash";
 
-export const allColumns: ColumnsType<IngredientResponse> = [
+export const allColumns = (): ColumnsType<IngredientPayload> => [
   {
     title: "Name",
     dataIndex: IngredientKey.NAME,
@@ -16,42 +20,42 @@ export const allColumns: ColumnsType<IngredientResponse> = [
     title: "Type",
     dataIndex: IngredientKey.TYPE,
     key: IngredientKey.TYPE,
-    width: 96,
+    width: 112,
     render: (value) => formatValueOrNull(value),
   },
   {
     title: "Calories",
     dataIndex: IngredientKey.CALORIES,
     key: IngredientKey.CALORIES,
-    width: 96,
+    width: 112,
     render: (value) => formatValueOrNull(value),
   },
   {
     title: "Protein",
     dataIndex: IngredientKey.PROTEIN,
     key: IngredientKey.PROTEIN,
-    width: 96,
+    width: 112,
     render: (value) => formatValueOrNull(value),
   },
   {
     title: "Fat",
     dataIndex: IngredientKey.FAT,
     key: IngredientKey.FAT,
-    width: 96,
+    width: 112,
     render: (value) => formatValueOrNull(value),
   },
   {
     title: "Carbs",
     dataIndex: IngredientKey.CARBS,
     key: IngredientKey.CARBS,
-    width: 96,
+    width: 112,
     render: (value) => formatValueOrNull(value),
   },
   {
     title: "Unit",
     dataIndex: IngredientKey.UNIT,
     key: IngredientKey.UNIT,
-    width: 80,
+    width: 96,
     render: (value) => formatValueOrNull(value),
   },
   {
@@ -75,8 +79,28 @@ export const allColumns: ColumnsType<IngredientResponse> = [
     key: "actions",
     fixed: "right",
     width: 40,
-    render: (_, record) => {
-      return <span>{record[IngredientKey.ID]}</span>;
+    render: (value) => {
+      return (
+        <Flex gap={8}>
+          <CreateEditIngredient
+            content={
+              <Button type="default" size="small" icon={<EditOutlined />} />
+            }
+            id={value[IngredientKey.ID]}
+          />
+          <DeleteIngredient
+            content={
+              <Button
+                type="default"
+                danger
+                size="small"
+                icon={<DeleteOutlined />}
+              />
+            }
+            id={value[IngredientKey.ID]}
+          />
+        </Flex>
+      );
     },
   },
 ];

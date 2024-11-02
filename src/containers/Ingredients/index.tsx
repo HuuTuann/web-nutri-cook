@@ -6,7 +6,7 @@ import {
   Table,
   TablePaginationConfig,
 } from "@/modules/web-feature-shared";
-import { IngredientResponse, useGetAllIngredient } from "@/queries";
+import { IngredientPayload, useGetAllIngredient } from "@/queries";
 import { allColumns } from "./allColumns";
 import { Toolbar } from "./Toolbar";
 import { useEffect } from "react";
@@ -37,9 +37,10 @@ export const Ingredients = () => {
   return (
     <Flex vertical gap={16}>
       <Toolbar />
-      <Table<IngredientResponse>
-        columns={allColumns}
+      <Table<IngredientPayload>
+        columns={allColumns()}
         dataSource={ingredients}
+        // dataSource={ingredientsMock}
         pagination={{
           pageSize: pageSize,
           total: totalRecords,
