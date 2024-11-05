@@ -1,4 +1,4 @@
-import { httpService } from "@/configs/httpService";
+import { httpService } from "@/modules/web-feature-shared";
 import {
   ParamsType,
   stringifyParams,

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { queryClient } from "@/configs/queryClient";
+import { queryClient } from "@/modules/web-feature-shared";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ToastifyProvider } from "@/hooks/useToastify";
 
