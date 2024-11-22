@@ -1,11 +1,17 @@
 "use client";
 
 import { Flex } from "antd";
-import { Table, TablePaginationConfig } from "@/modules/web-feature-shared";
+import {
+  initialPageParam,
+  Table,
+  TablePaginationConfig,
+} from "@/modules/web-feature-shared";
 import { allColumns } from "./allColumns";
-import { RecipeResponse } from "@/queries/Recipes/types";
+import { RecipeKey, RecipeResponse } from "@/queries/Recipes/types";
 import { Toolbar } from "./Toolbar";
 import { useGetAllRecipe } from "@/queries";
+import { useEffect } from "react";
+import { IngredientSelector } from "@/containers/Recipes/IngredientSelector";
 
 export const Recipes = () => {
   const {
@@ -26,18 +32,35 @@ export const Recipes = () => {
     });
   };
 
+  useEffect(() => {
+    setRecipeParams(initialPageParam);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Flex vertical gap={16}>
       <Toolbar />
       <Table<RecipeResponse>
         columns={allColumns}
-        dataSource={recipes}
+        dataSource={recipes.map((recipe) => ({
+          ...recipe,
+          key: recipe[RecipeKey.ID],
+        }))}
         pagination={{
           pageSize: pageSize,
           total: totalRecords,
         }}
         onChange={handleTableChange}
-        loading={isLoading}
+        loading={isLoading && false}
+        expandable={{
+          expandedRowRender: (record) => (
+            <IngredientSelector
+              recipeIngredients={record[RecipeKey.INGREDIENT_LIST]}
+            />
+          ),
+          rowExpandable: (record) =>
+            record[RecipeKey.INGREDIENT_LIST].length > 0,
+        }}
       />
     </Flex>
   );

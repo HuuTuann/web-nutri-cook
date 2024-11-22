@@ -11,7 +11,11 @@ import {
 import { Button, Flex, Form, Image, Input } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { getDefaultValue, ingredientSchema } from "./helpers";
+import {
+  getDefaultValue,
+  ingredientSchema,
+  ingredientTypeOptions,
+} from "./helpers";
 import { useToastify } from "@/hooks/useToastify";
 import { isEmpty, pickBy } from "lodash";
 import {
@@ -20,6 +24,7 @@ import {
   InputNumber,
   Row,
   Col,
+  Select,
 } from "@/modules/web-feature-shared";
 import { DeleteOutlined } from "@ant-design/icons";
 import "./styles.scss";
@@ -148,7 +153,9 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 <Controller
                   name={IngredientKey.TYPE}
                   control={control}
-                  render={({ field }) => <Input {...field} />}
+                  render={({ field }) => (
+                    <Select options={ingredientTypeOptions} {...field} />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -261,7 +268,6 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
               </Form.Item>
             </Col>
           </Row>
-
           <Row>
             <Col span={24}>
               {isEmpty(watch(IngredientKey.IMAGE_URL)) ? (
@@ -287,6 +293,7 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                     <span>Image</span>
                     <Button
                       danger
+                      type="default"
                       size="small"
                       icon={<DeleteOutlined />}
                       onClick={handleClearImage}
