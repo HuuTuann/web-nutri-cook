@@ -1,0 +1,17 @@
+.ant-card {
+  &-head {
+    padding-right: 0 !important;
+    font-weight: 400 !important;
+  }
+
+  &-body {
+    .ant-table {
+      border: 1px solid #f0f0f0;
+      box-shadow: none;
+    }
+
+    .ant-pagination {
+      display: none;
+    }
+  }
+}

@@ -25,7 +25,6 @@ export function useGetIngredientById(
     queryClient.invalidateQueries({
       queryKey: [API_QUERY_KEYS.GET_ALL_INGREDIENTS, options],
     });
-  // console.log("🚀 ~ data:", data);
 
   return {
     ingredient: data?.data as IngredientPayload,

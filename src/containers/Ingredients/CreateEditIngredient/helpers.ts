@@ -1,4 +1,4 @@
-import { IngredientPayload, IngredientKey } from "@/queries";
+import { IngredientPayload, IngredientKey, IngredientType } from "@/queries";
 import { z } from "zod";
 
 export const ingredientSchema = z.object({
@@ -42,3 +42,13 @@ export const getDefaultValue = (ingredient?: IngredientPayload) => {
     [IngredientKey.UNIT]: ingredient?.[IngredientKey.UNIT] || "",
   };
 };
+
+export const ingredientTypeOptions = [
+  { label: "Vegetable", value: IngredientType.VEGETABLE },
+  { label: "Fruit", value: IngredientType.FRUIT },
+  { label: "Protein", value: IngredientType.PROTEIN },
+  { label: "Dairy", value: IngredientType.DAIRY },
+  { label: "Grain", value: IngredientType.GRAIN },
+  { label: "Spice", value: IngredientType.SPICE },
+  { label: "Other", value: IngredientType.OTHER },
+];

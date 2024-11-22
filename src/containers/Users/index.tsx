@@ -2,9 +2,14 @@
 
 import { Toolbar } from "./Toolbar";
 import { Flex } from "antd";
-import { Table, TablePaginationConfig } from "@/modules/web-feature-shared";
+import {
+  initialPageParam,
+  Table,
+  TablePaginationConfig,
+} from "@/modules/web-feature-shared";
 import { useGetAllUser, UsersResponse } from "@/queries";
 import { allColumns } from "./allColumns";
+import { useEffect } from "react";
 
 export const Users = () => {
   const {
@@ -24,6 +29,11 @@ export const Users = () => {
       pageSize,
     });
   };
+
+  useEffect(() => {
+    setUserParams(initialPageParam);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Flex vertical gap={16}>

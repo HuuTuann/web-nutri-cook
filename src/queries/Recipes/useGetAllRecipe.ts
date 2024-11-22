@@ -3,7 +3,7 @@ import {
   ParamsType,
   TableParams,
 } from "@/modules/web-feature-shared";
-import { RecipeResponse, API_QUERY_KEYS } from "@/queries";
+import { API_QUERY_KEYS, RecipeResponse } from "@/queries";
 import { getAllRecipes } from "./api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isEmpty } from "lodash";
@@ -14,7 +14,7 @@ export const useGetAllRecipe = (options?: ParamsType) => {
 
   const { data, isLoading } = useQuery<PageResponseType<RecipeResponse>, Error>(
     {
-      queryKey: [API_QUERY_KEYS.GET_ALL_USERS, params],
+      queryKey: [API_QUERY_KEYS.GET_ALL_RECIPES, params],
       queryFn: async () => getAllRecipes({ ...options, ...params }),
       enabled: !isEmpty(params),
       ...options,
@@ -26,7 +26,9 @@ export const useGetAllRecipe = (options?: ParamsType) => {
   const queryClient = useQueryClient();
 
   const handleInvalidateRecipe = () =>
-    queryClient.invalidateQueries({ queryKey: [API_QUERY_KEYS.GET_ALL_USERS] });
+    queryClient.invalidateQueries({
+      queryKey: [API_QUERY_KEYS.GET_ALL_RECIPES, params],
+    });
 
   return {
     recipes,

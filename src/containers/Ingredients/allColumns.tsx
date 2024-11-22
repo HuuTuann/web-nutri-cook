@@ -1,12 +1,11 @@
 import { DeleteIngredient } from "./Actions/DeleteIngredient";
 import { CreateEditIngredient } from "./CreateEditIngredient";
 import { formatValueOrNull } from "@/lib/utils";
-import { Button } from "@/modules/web-feature-shared";
+import { Button, PreviewImage } from "@/modules/web-feature-shared";
 import { IngredientKey, IngredientPayload } from "@/queries";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Flex, Image } from "antd";
+import { Flex, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { isEmpty } from "lodash";
 
 export const allColumns = (): ColumnsType<IngredientPayload> => [
   {
@@ -59,20 +58,21 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     render: (value) => formatValueOrNull(value),
   },
   {
-    title: "Image",
-    dataIndex: IngredientKey.IMAGE_URL,
-    key: IngredientKey.IMAGE_URL,
-    render: (value) => {
-      if (isEmpty(value)) return "--";
-      return <Image src={value} width={192} alt="Image" />;
-    },
-  },
-  {
     title: "Description",
     dataIndex: IngredientKey.DESCRIPTION,
     key: IngredientKey.DESCRIPTION,
     width: 256,
-    render: (value) => formatValueOrNull(value),
+    render: (value) => (
+      <Typography.Paragraph
+        ellipsis={{
+          rows: 1,
+          expandable: true,
+          symbol: "More",
+        }}
+      >
+        {formatValueOrNull(value)}
+      </Typography.Paragraph>
+    ),
   },
   {
     title: "Actions",
@@ -82,6 +82,7 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     render: (value) => {
       return (
         <Flex gap={8}>
+          <PreviewImage url={value[IngredientKey.IMAGE_URL]} />
           <CreateEditIngredient
             content={
               <Button type="default" size="small" icon={<EditOutlined />} />

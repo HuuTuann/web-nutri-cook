@@ -1,25 +1,32 @@
 "use client";
 
-import {
-  genderOptions,
-  userSchema,
-} from "@/containers/Users/CreateEditUser/helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, Modal, Input, Flex, Row, Col, InputNumber } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { defaultValues } from "./helpers";
-import { useCreateUser, useGetAllUser, UserPayload, UsersKey } from "@/queries";
+import {
+  defaultValues,
+  genderOptions,
+  getDefaultValue,
+  userSchema,
+} from "./helpers";
+import {
+  useGetAllUser,
+  useGetUserById,
+  UserPayload,
+  UsersKey,
+  useUpdateUserById,
+} from "@/queries";
 import { Select } from "@/modules/web-feature-shared";
 import { pickBy } from "lodash";
 import { useToastify } from "@/hooks/useToastify";
 
 type Props = {
   content: React.ReactNode;
-  isEdit?: boolean;
+  id?: string;
 };
 
-export const CreateEditUser = ({ content, isEdit }: Props) => {
+export const CreateEditUser = ({ content, id }: Props) => {
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
@@ -33,6 +40,7 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
 
   const {
     control,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<UserPayload>({
@@ -42,13 +50,22 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
     resolver: zodResolver(userSchema),
   });
 
+  const { user } = useGetUserById({ id });
+
+  useEffect(() => {
+    if (id) {
+      reset(getDefaultValue(user));
+    }
+  }, [id, user, reset]);
+
   const { handleInvalidateUser } = useGetAllUser();
 
-  const { onCreateUser, isLoadingCreateUser } = useCreateUser({
+  const { onUpdateUser, isLoadingUpdateUser } = useUpdateUserById({
+    id,
     onSuccess: () => {
       handleCloseModal();
       handleInvalidateUser();
-      toastify.success("Create user success!");
+      toastify.success("Update user success!");
     },
     onError: () => {
       toastify.error("Something went wrong! Please try again.");
@@ -56,19 +73,24 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
   });
 
   const handleOk = (data: UserPayload) => {
-    const payload = pickBy(data) as unknown as UserPayload;
-    onCreateUser(payload);
+    const payload = pickBy({
+      ...data,
+      [UsersKey.ROLE]: ["USER"],
+      [UsersKey.GENDER]: data[UsersKey.GENDER] === 1 ? true : false,
+    }) as unknown as UserPayload;
+    console.log("🚀 ~ handleOk ~ payload:", payload);
+    onUpdateUser(payload);
   };
 
   return (
     <>
       <Flex onClick={showModal}>{content}</Flex>
       <Modal
-        title={isEdit ? "Edit User" : "Create User"}
+        title={id ? "Edit User" : "Create User"}
         open={open}
         onOk={handleSubmit(handleOk)}
         onCancel={handleCloseModal}
-        confirmLoading={isLoadingCreateUser}
+        confirmLoading={isLoadingUpdateUser}
       >
         <Form layout="vertical">
           <Row gutter={[8, 8]}>
@@ -88,13 +110,13 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Password"
-                validateStatus={errors[UsersKey.PASSWORD] ? "error" : ""}
-                help={errors[UsersKey.PASSWORD]?.message ?? ""}
+                label="Full Name"
+                validateStatus={errors[UsersKey.FULL_NAME] ? "error" : ""}
+                help={errors[UsersKey.FULL_NAME]?.message ?? ""}
                 required
               >
                 <Controller
-                  name={UsersKey.PASSWORD}
+                  name={UsersKey.FULL_NAME}
                   control={control}
                   render={({ field }) => <Input {...field} />}
                 />
@@ -118,25 +140,10 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Full Name"
-                validateStatus={errors[UsersKey.FULL_NAME] ? "error" : ""}
-                help={errors[UsersKey.FULL_NAME]?.message ?? ""}
-                required
-              >
-                <Controller
-                  name={UsersKey.FULL_NAME}
-                  control={control}
-                  render={({ field }) => <Input {...field} />}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={[8, 8]}>
-            <Col span={8}>
-              <Form.Item
                 label="Age"
                 validateStatus={errors[UsersKey.AGE] ? "error" : ""}
                 help={errors[UsersKey.AGE]?.message ?? ""}
+                required
               >
                 <Controller
                   name={UsersKey.AGE}
@@ -147,11 +154,14 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+          </Row>
+          <Row gutter={[8, 8]}>
+            <Col span={12}>
               <Form.Item
                 label="Weight"
                 validateStatus={errors[UsersKey.WEIGHT] ? "error" : ""}
                 help={errors[UsersKey.WEIGHT]?.message ?? ""}
+                required
               >
                 <Controller
                   name={UsersKey.WEIGHT}
@@ -166,11 +176,12 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col span={12}>
               <Form.Item
                 label="Height"
                 validateStatus={errors[UsersKey.HEIGHT] ? "error" : ""}
                 help={errors[UsersKey.HEIGHT]?.message ?? ""}
+                required
               >
                 <Controller
                   name={UsersKey.HEIGHT}
@@ -192,6 +203,7 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
                 label="Gender"
                 validateStatus={errors[UsersKey.GENDER] ? "error" : ""}
                 help={errors[UsersKey.GENDER]?.message ?? ""}
+                required
               >
                 <Controller
                   name={UsersKey.GENDER}
@@ -199,7 +211,6 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
                   render={({ field }) => (
                     <Select
                       placeholder="Select a type"
-                      style={{ width: "100%" }}
                       options={genderOptions}
                       {...field}
                     />
@@ -212,6 +223,7 @@ export const CreateEditUser = ({ content, isEdit }: Props) => {
                 label="Goal"
                 validateStatus={errors[UsersKey.GOAL] ? "error" : ""}
                 help={errors[UsersKey.GOAL]?.message ?? ""}
+                required
               >
                 <Controller
                   name={UsersKey.GOAL}

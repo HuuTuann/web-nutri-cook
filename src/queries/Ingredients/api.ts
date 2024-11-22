@@ -24,6 +24,5 @@ export const updateIngredient = (payload: IngredientPayload) => {
 };
 
 export const deleteIngredient = (id: string) => {
-  console.log("🚀 ~ deleteIngredient ~ id:", id);
   return httpService.delete(`/ingredient/${id}`);
 };

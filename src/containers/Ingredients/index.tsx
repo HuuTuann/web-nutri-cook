@@ -40,7 +40,6 @@ export const Ingredients = () => {
       <Table<IngredientPayload>
         columns={allColumns()}
         dataSource={ingredients}
-        // dataSource={ingredientsMock}
         pagination={{
           pageSize: pageSize,
           total: totalRecords,
