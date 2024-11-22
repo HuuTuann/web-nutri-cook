@@ -23,3 +23,13 @@ export interface IngredientPayload {
   [IngredientKey.IMAGE_URL]: string;
   [IngredientKey.UNIT]: string;
 }
+
+export enum IngredientType {
+  VEGETABLE = "VEGETABLE",
+  FRUIT = "FRUIT",
+  PROTEIN = "PROTEIN",
+  DAIRY = "DAIRY",
+  GRAIN = "GRAIN",
+  SPICE = "SPICE",
+  OTHER = "OTHER",
+}

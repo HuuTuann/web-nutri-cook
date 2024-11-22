@@ -32,6 +32,14 @@ export const defaultValues: UserPayload = {
   [UsersKey.ROLE]: "user",
 };
 
+export const getDefaultValue = (user?: UserPayload) => {
+  return {
+    ...defaultValues,
+    ...user,
+    [UsersKey.GENDER]: user?.[UsersKey.GENDER] ? 1 : 0,
+  };
+};
+
 export const genderOptions = [
   {
     label: "Male",

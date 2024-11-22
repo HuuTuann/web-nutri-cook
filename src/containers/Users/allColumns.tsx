@@ -1,12 +1,12 @@
 import { DateFormat } from "@/constants";
-import { CreateEditUser } from "@/containers/Users/CreateEditUser";
 import { formatDate, formatValueOrNull } from "@/lib/utils";
-import { Button } from "@/modules/web-feature-shared";
 import { UsersKey, UsersResponse } from "@/queries";
 import { ColumnsType } from "antd/es/table";
-import { FiEdit } from "react-icons/fi";
-import { AiOutlineDelete } from "react-icons/ai";
-import { Flex } from "antd";
+import { getGenderLabel } from "./helpers";
+import { Button, Flex } from "antd";
+import { DeleteUser } from "./Actions/DeleteUser";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { CreateEditUser } from "./CreateEditUser";
 
 export const allColumns = (): ColumnsType<UsersResponse> => [
   {
@@ -37,7 +37,7 @@ export const allColumns = (): ColumnsType<UsersResponse> => [
     title: "Gender",
     dataIndex: UsersKey.GENDER,
     key: UsersKey.GENDER,
-    render: (value) => formatValueOrNull(value),
+    render: (value) => getGenderLabel(value),
   },
   {
     title: "Weight",
@@ -66,15 +66,30 @@ export const allColumns = (): ColumnsType<UsersResponse> => [
   {
     title: "Actions",
     key: "actions",
-    width: 100,
-    render: () => (
-      <Flex gap={4}>
-        <CreateEditUser
-          content={<Button type="text" icon={<FiEdit />} />}
-          isEdit
-        />
-        <Button danger type="text" icon={<AiOutlineDelete />} />
-      </Flex>
-    ),
+    fixed: "right",
+    width: 40,
+    render: (value) => {
+      return (
+        <Flex gap={8}>
+          <CreateEditUser
+            content={
+              <Button type="default" size="small" icon={<EditOutlined />} />
+            }
+            id={value[UsersKey.ID]}
+          />
+          <DeleteUser
+            content={
+              <Button
+                type="default"
+                danger
+                size="small"
+                icon={<DeleteOutlined />}
+              />
+            }
+            id={value[UsersKey.ID]}
+          />
+        </Flex>
+      );
+    },
   },
 ];

@@ -1,15 +1,15 @@
 export enum UsersKey {
-  ID = "id",
+  ID = "user_ID",
   USERNAME = "username",
   PASSWORD = "password",
   EMAIL = "email",
-  FULL_NAME = "fullName",
+  FULL_NAME = "fullname",
   AGE = "age",
   GENDER = "gender",
   WEIGHT = "weight",
   HEIGHT = "height",
   GOAL = "goal",
-  ROLE = "role",
+  ROLE = "roles",
   CREATED_AT = "createdAt",
 }
 
@@ -32,6 +32,6 @@ export interface UsersResponse extends UserPayload {
 }
 
 export enum UserGender {
-  MALE = 0,
-  FEMALE = 1,
+  FEMALE = 0,
+  MALE = 1,
 }
