@@ -44,7 +44,6 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
   const [open, setOpen] = useState(false);
 
   const { recipe } = useGetRecipeById({ id, enabled: !!id });
-  console.log("🚀 ~ CreateEditRecipe ~ recipe:", recipe);
 
   const {
     control,
