@@ -84,6 +84,7 @@ export const allColumns = (): ColumnsType<UsersResponse> => [
                 danger
                 size="small"
                 icon={<DeleteOutlined />}
+                disabled
               />
             }
             id={value[UsersKey.ID]}
