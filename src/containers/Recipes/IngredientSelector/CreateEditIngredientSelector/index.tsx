@@ -33,7 +33,10 @@ export const CreateEditIngredientSelector: React.FC<Props> = ({
   const { ingredients, setIngredientParams } = useGetAllIngredient();
 
   useEffect(() => {
-    setIngredientParams(initialPageParam);
+    setIngredientParams({
+      ...initialPageParam,
+      pageSize: 9999,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -116,6 +119,7 @@ export const CreateEditIngredientSelector: React.FC<Props> = ({
                       placeholder="Select ingredient"
                       options={ingredientOptions}
                       value={value || []}
+                      showSearch
                       onChange={(value) => {
                         onChange(value);
                         const ingredientUnit = ingredients.find(
@@ -124,6 +128,13 @@ export const CreateEditIngredientSelector: React.FC<Props> = ({
                         )?.[IngredientKey.UNIT] as string;
 
                         setValue(RecipeKey.UNIT, ingredientUnit);
+                      }}
+                      filterOption={false}
+                      onSearch={(value) => {
+                        setIngredientParams((prev) => ({
+                          ...prev,
+                          search: value,
+                        }));
                       }}
                       {...props}
                     />
