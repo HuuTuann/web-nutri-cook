@@ -94,6 +94,9 @@ export const nutritionalQuantityOptions = [
   { label: "Balanced", value: RecipesNutritionalQuantity.BALANCED },
   { label: "Keto", value: RecipesNutritionalQuantity.KETO },
   { label: "Vegan", value: RecipesNutritionalQuantity.VEGAN },
+  { label: "Vegetarian", value: RecipesNutritionalQuantity.VEGETARIAN },
+  { label: "Paleo", value: RecipesNutritionalQuantity.PALEO },
+  { label: "Gluten Free", value: RecipesNutritionalQuantity.GLUTEN_FREE },
 ];
 
 export const formatIngredientList = (
