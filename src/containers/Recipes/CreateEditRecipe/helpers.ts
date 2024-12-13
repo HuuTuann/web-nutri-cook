@@ -74,6 +74,7 @@ export const mealTypeOptions = [
   { label: "Breakfast", value: RecipesMealType.BREAKFAST },
   { label: "Lunch", value: RecipesMealType.LUNCH },
   { label: "Dinner", value: RecipesMealType.DINNER },
+  { label: "Snack", value: RecipesMealType.SNACK },
 ];
 
 export const difficultyLevelOptions = [

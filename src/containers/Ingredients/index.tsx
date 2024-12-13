@@ -36,7 +36,10 @@ export const Ingredients = () => {
 
   return (
     <Flex vertical gap={16}>
-      <Toolbar />
+      <Toolbar
+        ingredientParams={ingredientParams}
+        setIngredientParams={setIngredientParams}
+      />
       <Table<IngredientPayload>
         columns={allColumns()}
         dataSource={ingredients}

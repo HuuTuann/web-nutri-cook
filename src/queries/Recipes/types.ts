@@ -63,6 +63,7 @@ export enum RecipesMealType {
   LUNCH = "LUNCH",
   DINNER = "DINNER",
   BREAKFAST = "BREAKFAST",
+  SNACK = "SNACK",
 }
 
 export enum RecipesDifficultyLevel {

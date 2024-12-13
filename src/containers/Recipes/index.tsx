@@ -39,7 +39,7 @@ export const Recipes = () => {
 
   return (
     <Flex vertical gap={16}>
-      <Toolbar />
+      <Toolbar recipeParams={recipeParams} setRecipeParams={setRecipeParams} />
       <Table<RecipeResponse>
         columns={allColumns}
         dataSource={recipes.map((recipe) => ({
@@ -51,7 +51,7 @@ export const Recipes = () => {
           total: totalRecords,
         }}
         onChange={handleTableChange}
-        loading={isLoading && false}
+        loading={isLoading}
         expandable={{
           expandedRowRender: (record) => (
             <IngredientSelector
