@@ -144,7 +144,9 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
                 <Controller
                   name={RecipeKey.NAME}
                   control={control}
-                  render={({ field }) => <Input {...field} />}
+                  render={({ field }) => (
+                    <Input placeholder="Enter Recipe Name" {...field} />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -160,7 +162,12 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
                 <Controller
                   name={RecipeKey.COOKING_INSTRUCTIONS}
                   control={control}
-                  render={({ field }) => <Input {...field} />}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="Enter Cooking Instructions"
+                      {...field}
+                    />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -200,8 +207,13 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
                 <Controller
                   name={RecipeKey.DIFFICULTY_LEVEL}
                   control={control}
-                  render={({ field }) => (
-                    <Select options={difficultyLevelOptions} {...field} />
+                  render={({ field: { value, ...props } }) => (
+                    <Select
+                      placeholder="Select Difficulty Level"
+                      options={difficultyLevelOptions}
+                      value={isEmpty(value) ? [] : value}
+                      {...props}
+                    />
                   )}
                 />
               </Form.Item>
@@ -218,8 +230,15 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
                 <Controller
                   name={RecipeKey.NUTRITIONAL_QUALITY}
                   control={control}
-                  render={({ field }) => (
-                    <Select options={nutritionalQuantityOptions} {...field} />
+                  render={({ field: { value, ...props } }) => (
+                    <Select
+                      mode="multiple"
+                      allowClear
+                      placeholder="Select Nutritional Quantity"
+                      options={nutritionalQuantityOptions}
+                      value={isEmpty(value) ? [] : value}
+                      {...props}
+                    />
                   )}
                 />
               </Form.Item>
@@ -333,6 +352,7 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
                         minRows: 3,
                         maxRows: 5,
                       }}
+                      placeholder="Enter Description"
                       maxLength={1024}
                       {...field}
                     />

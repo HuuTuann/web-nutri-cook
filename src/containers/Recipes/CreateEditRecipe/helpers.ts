@@ -31,7 +31,7 @@ export const recipeSchema = z.object({
   [RecipeKey.DIFFICULTY_LEVEL]: z.string().nonempty({
     message: "Difficulty level is required",
   }),
-  [RecipeKey.NUTRITIONAL_QUALITY]: z.string().nonempty({
+  [RecipeKey.NUTRITIONAL_QUALITY]: z.array(z.string()).nonempty({
     message: "Nutritional quality is required",
   }),
   [RecipeKey.DESCRIPTION]: z.string(),
@@ -50,7 +50,7 @@ export const defaultValues: RecipePayload = {
   [RecipeKey.PREP_TIME]: 0,
   [RecipeKey.COOK_TIME]: 0,
   [RecipeKey.DIFFICULTY_LEVEL]: "",
-  [RecipeKey.NUTRITIONAL_QUALITY]: "",
+  [RecipeKey.NUTRITIONAL_QUALITY]: [],
 };
 
 export const getDefaultValue = (recipe?: RecipePayload) => {
@@ -66,7 +66,7 @@ export const getDefaultValue = (recipe?: RecipePayload) => {
     [RecipeKey.COOK_TIME]: recipe?.[RecipeKey.COOK_TIME] || 0,
     [RecipeKey.DIFFICULTY_LEVEL]: recipe?.[RecipeKey.DIFFICULTY_LEVEL] || "",
     [RecipeKey.NUTRITIONAL_QUALITY]:
-      recipe?.[RecipeKey.NUTRITIONAL_QUALITY] || "",
+      recipe?.[RecipeKey.NUTRITIONAL_QUALITY] || [],
   };
 };
 
