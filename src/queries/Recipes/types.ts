@@ -38,7 +38,7 @@ export interface RecipePayload {
   [RecipeKey.PREP_TIME]: number;
   [RecipeKey.COOK_TIME]: number;
   [RecipeKey.DIFFICULTY_LEVEL]: string;
-  [RecipeKey.NUTRITIONAL_QUALITY]: string;
+  [RecipeKey.NUTRITIONAL_QUALITY]: [];
 }
 
 export interface RecipeResponse {
@@ -56,7 +56,7 @@ export interface RecipeResponse {
   [RecipeKey.PREP_TIME]: number;
   [RecipeKey.COOK_TIME]: number;
   [RecipeKey.DIFFICULTY_LEVEL]: string;
-  [RecipeKey.NUTRITIONAL_QUALITY]: string;
+  [RecipeKey.NUTRITIONAL_QUALITY]: [];
 }
 
 export enum RecipesMealType {
