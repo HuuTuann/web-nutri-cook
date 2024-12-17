@@ -17,17 +17,17 @@ export const allColumns = (
       width: 192,
     },
     {
+      title: "Quantity",
+      dataIndex: RecipeKey.QUANTITY,
+      key: RecipeKey.QUANTITY,
+      width: 112,
+    },
+    {
       title: "Unit",
       dataIndex: RecipeKey.UNIT,
       key: RecipeKey.UNIT,
       width: 112,
       render: (value) => formatValueOrNull(capitalize(value)),
-    },
-    {
-      title: "Quantity",
-      dataIndex: RecipeKey.QUANTITY,
-      key: RecipeKey.QUANTITY,
-      width: 112,
     },
   ];
 

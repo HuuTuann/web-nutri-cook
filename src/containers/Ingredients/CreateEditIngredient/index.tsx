@@ -181,7 +181,6 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 label="Calories"
                 validateStatus={errors[IngredientKey.CALORIES] ? "error" : ""}
                 help={errors[IngredientKey.CALORIES]?.message ?? ""}
-                required
               >
                 <Controller
                   name={IngredientKey.CALORIES}
@@ -197,7 +196,6 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 label="Protein"
                 validateStatus={errors[IngredientKey.PROTEIN] ? "error" : ""}
                 help={errors[IngredientKey.PROTEIN]?.message ?? ""}
-                required
               >
                 <Controller
                   name={IngredientKey.PROTEIN}
@@ -215,7 +213,6 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 label="Fat"
                 validateStatus={errors[IngredientKey.FAT] ? "error" : ""}
                 help={errors[IngredientKey.FAT]?.message ?? ""}
-                required
               >
                 <Controller
                   name={IngredientKey.FAT}
