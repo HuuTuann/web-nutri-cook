@@ -78,7 +78,6 @@ export const CreateEditUser = ({ content, id }: Props) => {
       [UsersKey.ROLE]: ["USER"],
       [UsersKey.GENDER]: data[UsersKey.GENDER] === 1 ? true : false,
     }) as unknown as UserPayload;
-    console.log("🚀 ~ handleOk ~ payload:", payload);
     onUpdateUser(payload);
   };
 

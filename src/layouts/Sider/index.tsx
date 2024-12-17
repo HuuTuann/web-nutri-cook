@@ -3,10 +3,22 @@ import "../styles.scss";
 import { menuItems } from "./helpers";
 import { usePathname, useRouter } from "next/navigation";
 import { FaBowlFood } from "react-icons/fa6";
+import { useCallback } from "react";
+import { Paths } from "@/constants";
 
 export const Sider = ({ collapsed }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const getPathname = useCallback(() => {
+    if (pathname.includes(Paths.USERS)) {
+      return Paths.USERS;
+    } else if (pathname.includes(Paths.INGREDIENTS)) {
+      return Paths.INGREDIENTS;
+    } else {
+      return Paths.RECIPES;
+    }
+  }, [pathname]);
 
   const { Sider: SiderCore } = Layout;
 
@@ -25,7 +37,7 @@ export const Sider = ({ collapsed }: Props) => {
       </Flex>
       <Menu
         onClick={(e) => router.push(e.key)}
-        selectedKeys={[pathname]}
+        selectedKeys={[getPathname()]}
         mode="inline"
         items={menuItems}
       />

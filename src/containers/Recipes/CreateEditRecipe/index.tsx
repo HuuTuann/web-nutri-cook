@@ -33,13 +33,16 @@ import {
 } from "@/modules/web-feature-shared";
 import { DeleteOutlined } from "@ant-design/icons";
 import { CreateEditIngredientSelector } from "../IngredientSelector/CreateEditIngredientSelector";
+import { useRouter } from "next/navigation";
 
 type Props = {
   content: React.ReactNode;
   id?: string;
+  isNavigate?: boolean;
 };
 
-export const CreateEditRecipe = ({ content, id }: Props) => {
+export const CreateEditRecipe = ({ content, id, isNavigate }: Props) => {
+  const router = useRouter();
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
@@ -77,10 +80,14 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
   const { handleInvalidateRecipe } = useGetAllRecipe();
 
   const { onCreateRecipe, isLoadingCreateRecipe } = useCreateRecipe({
-    onSuccess: () => {
+    onSuccess: (data) => {
       handleCloseModal();
       handleInvalidateRecipe();
       toastify.success("Create recipe success!");
+      if (isNavigate) {
+        // @ts-expect-error: TypeScript cannot infer the type of data?.data?.id
+        router.push(`/recipes/${data?.data?.recipe_ID}`);
+      }
     },
     onError: () => {
       handleInvalidateRecipe();

@@ -26,7 +26,7 @@ export const allColumns = (handleClick: Props): ColumnsType<RecipeResponse> => {
       title: "Difficulty Level",
       dataIndex: RecipeKey.DIFFICULTY_LEVEL,
       key: RecipeKey.DIFFICULTY_LEVEL,
-      width: 192,
+      width: 160,
       onCell: (record) => ({
         onClick: () => handleClick(record?.[RecipeKey.ID]),
       }),
@@ -58,7 +58,7 @@ export const allColumns = (handleClick: Props): ColumnsType<RecipeResponse> => {
       title: "Nutritional Quality",
       dataIndex: RecipeKey.NUTRITIONAL_QUALITY,
       key: RecipeKey.NUTRITIONAL_QUALITY,
-      width: 256,
+      width: 288,
       onCell: (record) => ({
         onClick: () => handleClick(record?.[RecipeKey.ID]),
       }),

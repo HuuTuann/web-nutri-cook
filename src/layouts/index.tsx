@@ -18,16 +18,14 @@ export const Layouts = ({ children }: LayoutsProps) => {
   const [heading, setHeading] = useState("");
 
   useEffect(() => {
-    switch (pathname) {
-      case Paths.USERS:
-        setHeading("Users");
-        break;
-      case Paths.INGREDIENTS:
-        setHeading("Ingredients");
-        break;
-      case Paths.RECIPES:
-        setHeading("Recipes");
-        break;
+    if (pathname.startsWith(Paths.USERS)) {
+      setHeading("Users");
+    } else if (pathname.startsWith(Paths.INGREDIENTS)) {
+      setHeading("Ingredients");
+    } else if (pathname.startsWith(Paths.RECIPES_DETAIL)) {
+      setHeading("Recipes Detail");
+    } else {
+      setHeading("Recipes");
     }
   }, [pathname]);
 
