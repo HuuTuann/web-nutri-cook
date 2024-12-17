@@ -43,7 +43,7 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
-  const { recipe } = useGetRecipeById({ id, enabled: !!id });
+  const { recipe, handleInvalidateRecipeById } = useGetRecipeById({ id });
 
   const {
     control,
@@ -94,6 +94,7 @@ export const CreateEditRecipe = ({ content, id }: Props) => {
       onSuccess: () => {
         handleCloseModal();
         handleInvalidateRecipe();
+        handleInvalidateRecipeById();
         toastify.success("Update recipe success!");
       },
       onError: () => {

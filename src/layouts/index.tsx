@@ -25,6 +25,9 @@ export const Layouts = ({ children }: LayoutsProps) => {
       case Paths.INGREDIENTS:
         setHeading("Ingredients");
         break;
+      case Paths.RECIPES:
+        setHeading("Recipes");
+        break;
     }
   }, [pathname]);
 

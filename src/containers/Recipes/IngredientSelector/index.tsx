@@ -10,7 +10,7 @@ type Props = {
 
 export const IngredientSelector: React.FC<Props> = ({ recipeIngredients }) => {
   return (
-    <Flex vertical gap={4} align="flex-start" className="ml-20">
+    <Flex vertical gap={4} align="flex-start">
       <span className="font-semibold">Recipe Ingredient List: </span>
       <Table<IngredientSelectorType>
         columns={allColumns()}

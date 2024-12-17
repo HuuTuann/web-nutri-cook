@@ -73,6 +73,7 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
   };
 
   const { handleInvalidateIngredient } = useGetAllIngredient();
+  const { handleInvalidateIngredientById } = useGetIngredientById();
 
   const { onCreateIngredient, isLoadingCreateIngredient } = useCreateIngredient(
     {
@@ -92,6 +93,7 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
       onSuccess: () => {
         handleCloseModal();
         handleInvalidateIngredient();
+        handleInvalidateIngredientById();
         toastify.success("Update ingredient success!");
       },
       onError: () => {

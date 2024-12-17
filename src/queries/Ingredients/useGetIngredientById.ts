@@ -13,7 +13,7 @@ export function useGetIngredientById(
     Error,
     ResponseType<IngredientPayload>
   >({
-    queryKey: [API_QUERY_KEYS.GET_INGREDIENTS_DETAIL, options],
+    queryKey: [API_QUERY_KEYS.GET_INGREDIENTS_DETAIL, options?.id],
     queryFn: async () => getIngredientDetail({ ...options }),
     enabled: !!options?.id,
     ...options,
@@ -23,7 +23,7 @@ export function useGetIngredientById(
 
   const handleInvalidateIngredientById = () =>
     queryClient.invalidateQueries({
-      queryKey: [API_QUERY_KEYS.GET_ALL_INGREDIENTS, options],
+      queryKey: [API_QUERY_KEYS.GET_INGREDIENTS_DETAIL, options?.id],
     });
 
   return {

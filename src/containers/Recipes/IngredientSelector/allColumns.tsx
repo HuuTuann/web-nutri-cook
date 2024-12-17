@@ -1,8 +1,10 @@
+import { formatValueOrNull } from "@/lib/utils";
 import { Button } from "@/modules/web-feature-shared";
 import { IngredientSelectorType, RecipeKey } from "@/queries";
 import { CloseOutlined } from "@ant-design/icons";
 import { Flex } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { capitalize } from "lodash";
 
 export const allColumns = (
   handleDeleteIngredient?: (id: string) => void,
@@ -19,6 +21,7 @@ export const allColumns = (
       dataIndex: RecipeKey.UNIT,
       key: RecipeKey.UNIT,
       width: 112,
+      render: (value) => formatValueOrNull(capitalize(value)),
     },
     {
       title: "Quantity",
