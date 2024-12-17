@@ -1,126 +1,166 @@
 import { formatValueOrNull } from "@/lib/utils";
-import { Button, PreviewImage } from "@/modules/web-feature-shared";
+import { Button, PreviewImage, Tag } from "@/modules/web-feature-shared";
 import { RecipeKey, RecipeResponse } from "@/queries/Recipes/types";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Flex, Typography } from "antd";
+import { Flex } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { CreateEditRecipe } from "./CreateEditRecipe";
 import { DeleteRecipe } from "./Actions/DeleteRecipe";
 import { capitalize, startCase } from "lodash";
 
-export const allColumns: ColumnsType<RecipeResponse> = [
-  {
-    title: "Name",
-    dataIndex: RecipeKey.NAME,
-    key: RecipeKey.NAME,
-    width: 192,
-    render: (value) => formatValueOrNull(value),
-  },
-  {
-    title: "Cooking Instructions",
-    dataIndex: RecipeKey.COOKING_INSTRUCTIONS,
-    key: RecipeKey.COOKING_INSTRUCTIONS,
-    width: 256,
-    render: (value) => (
-      <Typography.Paragraph
-        ellipsis={{
-          rows: 1,
-          expandable: true,
-          symbol: "More",
-        }}
-      >
-        {formatValueOrNull(value)}
-      </Typography.Paragraph>
-    ),
-  },
-  {
-    title: "Nutritional Quality",
-    dataIndex: RecipeKey.NUTRITIONAL_QUALITY,
-    key: RecipeKey.NUTRITIONAL_QUALITY,
-    width: 112,
-    render: (value: string[]) => (
-      <Flex>
-        {value?.map((val, index) => (
-          <Typography.Text key={index}>
-            {capitalize(startCase(val.replace(/_/g, " ")))}
-          </Typography.Text>
-        ))}
-      </Flex>
-    ),
-  },
-  {
-    title: "Calories",
-    dataIndex: RecipeKey.CALORIES,
-    key: RecipeKey.CALORIES,
-    width: 112,
-    render: (value) => formatValueOrNull(value),
-  },
-  {
-    title: "Protein",
-    dataIndex: RecipeKey.PROTEIN,
-    key: RecipeKey.PROTEIN,
-    width: 112,
-    render: (value) => formatValueOrNull(value),
-  },
-  {
-    title: "Fat",
-    dataIndex: RecipeKey.FAT,
-    key: RecipeKey.FAT,
-    width: 112,
-    render: (value) => formatValueOrNull(value),
-  },
-  {
-    title: "Carbs",
-    dataIndex: RecipeKey.CARBS,
-    key: RecipeKey.CARBS,
-    width: 112,
-    render: (value) => formatValueOrNull(value),
-  },
-  {
-    title: "Description",
-    dataIndex: RecipeKey.DESCRIPTION,
-    key: RecipeKey.DESCRIPTION,
-    width: 256,
-    render: (value) => (
-      <Typography.Paragraph
-        ellipsis={{
-          rows: 1,
-          expandable: true,
-          symbol: "More",
-        }}
-      >
-        {formatValueOrNull(value)}
-      </Typography.Paragraph>
-    ),
-  },
-  {
-    title: "Actions",
-    key: "actions",
-    fixed: "right",
-    width: 40,
-    render: (value) => {
-      return (
-        <Flex gap={8}>
-          <PreviewImage url={value[RecipeKey.IMAGE_URL]} />
-          <CreateEditRecipe
-            content={
-              <Button type="default" size="small" icon={<EditOutlined />} />
-            }
-            id={value[RecipeKey.ID]}
-          />
-          <DeleteRecipe
-            content={
-              <Button
-                type="default"
-                danger
-                size="small"
-                icon={<DeleteOutlined />}
-              />
-            }
-            id={value[RecipeKey.ID]}
-          />
-        </Flex>
-      );
+type Props = (id: string) => void;
+
+export const allColumns = (handleClick: Props): ColumnsType<RecipeResponse> => {
+  return [
+    {
+      title: "Name",
+      dataIndex: RecipeKey.NAME,
+      key: RecipeKey.NAME,
+      width: 192,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value) => formatValueOrNull(value),
     },
-  },
-];
+    {
+      title: "Difficulty Level",
+      dataIndex: RecipeKey.DIFFICULTY_LEVEL,
+      key: RecipeKey.DIFFICULTY_LEVEL,
+      width: 192,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value: string) => (
+        <Tag variant="default">
+          {capitalize(startCase(value.replace(/_/g, " ")))}
+        </Tag>
+      ),
+    },
+    {
+      title: "Meal Type",
+      dataIndex: RecipeKey.MEAL_TYPE,
+      key: RecipeKey.MEAL_TYPE,
+      width: 256,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value: string[]) => (
+        <Flex wrap="wrap" gap={8}>
+          {value?.map((val, index) => (
+            <Tag key={index} variant="default">
+              {capitalize(startCase(val.replace(/_/g, " ")))}
+            </Tag>
+          ))}
+        </Flex>
+      ),
+    },
+    {
+      title: "Nutritional Quality",
+      dataIndex: RecipeKey.NUTRITIONAL_QUALITY,
+      key: RecipeKey.NUTRITIONAL_QUALITY,
+      width: 256,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value: string[]) => (
+        <Flex wrap="wrap" gap={8}>
+          {value?.map((val, index) => (
+            <Tag key={index} variant="default">
+              {capitalize(startCase(val.replace(/_/g, " ")))}
+            </Tag>
+          ))}
+        </Flex>
+      ),
+    },
+    {
+      title: "Prep Time",
+      dataIndex: RecipeKey.PREP_TIME,
+      key: RecipeKey.PREP_TIME,
+      width: 112,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value) => formatValueOrNull(value),
+    },
+    {
+      title: "Cook Time",
+      dataIndex: RecipeKey.COOK_TIME,
+      key: RecipeKey.COOK_TIME,
+      width: 112,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value) => formatValueOrNull(value),
+    },
+    {
+      title: "Calories",
+      dataIndex: RecipeKey.CALORIES,
+      key: RecipeKey.CALORIES,
+      width: 112,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value) => formatValueOrNull(value),
+    },
+    {
+      title: "Protein",
+      dataIndex: RecipeKey.PROTEIN,
+      key: RecipeKey.PROTEIN,
+      width: 112,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value) => formatValueOrNull(value),
+    },
+    {
+      title: "Fat",
+      dataIndex: RecipeKey.FAT,
+      key: RecipeKey.FAT,
+      width: 112,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value) => formatValueOrNull(value),
+    },
+    {
+      title: "Carbs",
+      dataIndex: RecipeKey.CARBS,
+      key: RecipeKey.CARBS,
+      width: 112,
+      onCell: (record) => ({
+        onClick: () => handleClick(record?.[RecipeKey.ID]),
+      }),
+      render: (value) => formatValueOrNull(value),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      fixed: "right",
+      width: 40,
+      render: (value) => {
+        return (
+          <Flex gap={8}>
+            <PreviewImage url={value[RecipeKey.IMAGE_URL]} />
+            <CreateEditRecipe
+              content={
+                <Button type="default" size="small" icon={<EditOutlined />} />
+              }
+              id={value[RecipeKey.ID]}
+            />
+            <DeleteRecipe
+              content={
+                <Button
+                  type="default"
+                  danger
+                  size="small"
+                  icon={<DeleteOutlined />}
+                />
+              }
+              id={value[RecipeKey.ID]}
+            />
+          </Flex>
+        );
+      },
+    },
+  ];
+};

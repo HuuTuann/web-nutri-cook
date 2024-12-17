@@ -12,8 +12,11 @@ import { Toolbar } from "./Toolbar";
 import { useGetAllRecipe } from "@/queries";
 import { useEffect } from "react";
 import { IngredientSelector } from "@/containers/Recipes/IngredientSelector";
+import { useRouter } from "next/navigation";
 
 export const Recipes = () => {
+  const router = useRouter();
+
   const {
     recipes,
     isLoading,
@@ -37,11 +40,15 @@ export const Recipes = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleClick = (id: string) => {
+    router.push(`/recipes/${id}`);
+  };
+
   return (
     <Flex vertical gap={16}>
       <Toolbar recipeParams={recipeParams} setRecipeParams={setRecipeParams} />
       <Table<RecipeResponse>
-        columns={allColumns}
+        columns={allColumns(handleClick)}
         dataSource={recipes.map((recipe) => ({
           ...recipe,
           key: recipe[RecipeKey.ID],
@@ -54,9 +61,11 @@ export const Recipes = () => {
         loading={isLoading}
         expandable={{
           expandedRowRender: (record) => (
-            <IngredientSelector
-              recipeIngredients={record[RecipeKey.INGREDIENT_LIST]}
-            />
+            <Flex className="ml-20">
+              <IngredientSelector
+                recipeIngredients={record[RecipeKey.INGREDIENT_LIST]}
+              />
+            </Flex>
           ),
           rowExpandable: (record) =>
             record[RecipeKey.INGREDIENT_LIST].length > 0,

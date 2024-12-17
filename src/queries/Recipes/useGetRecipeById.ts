@@ -14,7 +14,7 @@ export function useGetRecipeById(
     Error,
     ResponseType<RecipeResponse>
   >({
-    queryKey: [API_QUERY_KEYS.GET_RECIPES_DETAIL, options],
+    queryKey: [API_QUERY_KEYS.GET_RECIPES_DETAIL, options?.id],
     queryFn: async () => getRecipeDetail({ ...options }),
     enabled: !!options?.id,
     ...options,
@@ -24,7 +24,7 @@ export function useGetRecipeById(
 
   const handleInvalidateRecipeById = () =>
     queryClient.invalidateQueries({
-      queryKey: [API_QUERY_KEYS.GET_ALL_RECIPES, options],
+      queryKey: [API_QUERY_KEYS.GET_RECIPES_DETAIL, options?.id],
     });
 
   return {

@@ -1,0 +1,34 @@
+.ant-col {
+  .ant-image {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    object-fit: cover;
+
+    img,
+    .ant-image-mask {
+      max-height: 500px;
+      object-fit: cover;
+    }
+  }
+
+  .ant-pagination {
+    display: none;
+  }
+}
+
+.ant-layout-content {
+  .ant-breadcrumb {
+    margin-bottom: 0 !important;
+
+    &-link a {
+      font-weight: 600;
+      color: var(--color-primary);
+
+      &:hover {
+        background-color: transparent;
+        text-decoration: underline;
+      }
+    }
+  }
+}

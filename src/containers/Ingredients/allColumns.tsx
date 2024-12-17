@@ -1,11 +1,12 @@
 import { DeleteIngredient } from "./Actions/DeleteIngredient";
 import { CreateEditIngredient } from "./CreateEditIngredient";
 import { formatValueOrNull } from "@/lib/utils";
-import { Button, PreviewImage } from "@/modules/web-feature-shared";
+import { Button, PreviewImage, Tag } from "@/modules/web-feature-shared";
 import { IngredientKey, IngredientPayload } from "@/queries";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Flex, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { capitalize, startCase } from "lodash";
 
 export const allColumns = (): ColumnsType<IngredientPayload> => [
   {
@@ -20,7 +21,11 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.TYPE,
     key: IngredientKey.TYPE,
     width: 112,
-    render: (value) => formatValueOrNull(value),
+    render: (value: string) => (
+      <Tag variant="default">
+        {capitalize(startCase(value.replace(/_/g, " ")))}
+      </Tag>
+    ),
   },
   {
     title: "Calories",
@@ -55,7 +60,7 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.UNIT,
     key: IngredientKey.UNIT,
     width: 96,
-    render: (value) => formatValueOrNull(value),
+    render: (value) => formatValueOrNull(capitalize(value)),
   },
   {
     title: "Description",
