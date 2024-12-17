@@ -228,7 +228,6 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 label="Carbs"
                 validateStatus={errors[IngredientKey.CARBS] ? "error" : ""}
                 help={errors[IngredientKey.CARBS]?.message ?? ""}
-                required
               >
                 <Controller
                   name={IngredientKey.CARBS}

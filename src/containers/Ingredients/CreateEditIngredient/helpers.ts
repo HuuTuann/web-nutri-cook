@@ -17,8 +17,8 @@ export const ingredientSchema = z.object({
   [IngredientKey.FAT]: z.number({
     message: "Fat must be a number",
   }),
-  [IngredientKey.CARBS]: z.number().positive({
-    message: "Carbs must be more than 0",
+  [IngredientKey.CARBS]: z.number({
+    message: "Carbs must be a number",
   }),
   [IngredientKey.IMAGE_URL]: z.string().nonempty({
     message: "Image is required",
