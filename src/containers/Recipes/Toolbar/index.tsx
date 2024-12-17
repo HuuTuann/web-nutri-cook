@@ -37,7 +37,7 @@ export const Toolbar: React.FC<Props> = ({ recipeParams, setRecipeParams }) => {
   return (
     <Flex justify="space-between">
       <Input
-        placeholder="Search ingredient by name"
+        placeholder="Search recipe by name"
         className="w-96"
         onChange={handleSearch}
       />

@@ -20,7 +20,7 @@ const { Text, Paragraph } = Typography;
 export const RecipeDetail = () => {
   const router = useRouter();
   const param = useParams();
-  const { recipe, handleInvalidateRecipeById } = useGetRecipeById({
+  const { recipe } = useGetRecipeById({
     id: param.id as string,
   });
 
@@ -43,6 +43,10 @@ export const RecipeDetail = () => {
         />
         <Flex gap={8}>
           <CreateEditRecipe
+            isNavigate
+            content={<Button size="middle">Create Recipe</Button>}
+          />
+          <CreateEditRecipe
             content={
               <Button type="default" size="middle" icon={<EditOutlined />}>
                 Edit
@@ -51,6 +55,7 @@ export const RecipeDetail = () => {
             id={recipe?.[RecipeKey.ID]}
           />
           <DeleteRecipe
+            isNavigate
             content={
               <Button
                 type="default"

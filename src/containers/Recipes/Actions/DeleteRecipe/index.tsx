@@ -2,14 +2,17 @@ import { useToastify } from "@/hooks/useToastify";
 import { Modal } from "@/modules/web-feature-shared";
 import { useDeleteRecipeById, useGetAllRecipe } from "@/queries";
 import { Flex } from "antd";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
   content: React.ReactNode;
   id: string;
+  isNavigate?: boolean;
 };
 
-export const DeleteRecipe = ({ content, id }: Props) => {
+export const DeleteRecipe = ({ content, id, isNavigate }: Props) => {
+  const router = useRouter();
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
@@ -31,6 +34,9 @@ export const DeleteRecipe = ({ content, id }: Props) => {
         handleCloseModal();
         toastify.success("Recipe deleted successfully");
         handleInvalidateRecipe();
+        if (isNavigate) {
+          router.push("/recipes");
+        }
       },
       onError: () => {
         toastify.error("Failed to delete recipe");

@@ -39,7 +39,7 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
-  const { ingredient } = useGetIngredientById({
+  const { ingredient, handleInvalidateIngredientById } = useGetIngredientById({
     id,
   });
 
@@ -69,11 +69,10 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
 
   const handleCloseModal = () => {
     setOpen(false);
-    reset(getDefaultValue());
+    reset(getDefaultValue(ingredient));
   };
 
   const { handleInvalidateIngredient } = useGetAllIngredient();
-  const { handleInvalidateIngredientById } = useGetIngredientById();
 
   const { onCreateIngredient, isLoadingCreateIngredient } = useCreateIngredient(
     {
