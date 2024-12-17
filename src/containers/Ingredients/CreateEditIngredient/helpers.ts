@@ -8,14 +8,14 @@ export const ingredientSchema = z.object({
   [IngredientKey.TYPE]: z.string().nonempty({
     message: "Type is required",
   }),
-  [IngredientKey.CALORIES]: z.number().positive({
-    message: "Calories must be more than 0",
+  [IngredientKey.CALORIES]: z.number({
+    message: "Calories must be a number",
   }),
-  [IngredientKey.PROTEIN]: z.number().positive({
-    message: "Protein must be more than 0",
+  [IngredientKey.PROTEIN]: z.number({
+    message: "Protein must be a number",
   }),
-  [IngredientKey.FAT]: z.number().positive({
-    message: "Fat must be more than 0",
+  [IngredientKey.FAT]: z.number({
+    message: "Fat must be a number",
   }),
   [IngredientKey.CARBS]: z.number().positive({
     message: "Carbs must be more than 0",
