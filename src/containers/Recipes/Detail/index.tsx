@@ -43,7 +43,6 @@ export const RecipeDetail = () => {
         />
         <Flex gap={8}>
           <CreateEditRecipe
-            isNavigate
             content={<Button size="middle">Create Recipe</Button>}
           />
           <CreateEditRecipe

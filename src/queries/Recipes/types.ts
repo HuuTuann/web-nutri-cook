@@ -20,6 +20,14 @@ export enum RecipeKey {
   NUTRITIONAL_QUALITY = "nutritionalQuality",
 }
 
+export interface InstructionType {
+  [RecipeKey.COOKING_INSTRUCTIONS]: string;
+}
+
+export interface InstructionListType {
+  [RecipeKey.COOKING_INSTRUCTIONS]: string[];
+}
+
 export interface IngredientSelectorType {
   [RecipeKey.INGREDIENT_ID]?: string;
   [RecipeKey.INGREDIENT_NAME]: string;

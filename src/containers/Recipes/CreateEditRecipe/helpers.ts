@@ -103,7 +103,7 @@ export const nutritionalQuantityOptions = [
 export const formatIngredientList = (
   ingredientList: IngredientSelectorType[],
 ) => {
-  return ingredientList.map((ingredient) => ({
+  return ingredientList?.map((ingredient) => ({
     [RecipeKey.INGREDIENT_ID]: ingredient[RecipeKey.INGREDIENT_ID],
     [RecipeKey.QUANTITY]: ingredient[RecipeKey.QUANTITY],
   }));
