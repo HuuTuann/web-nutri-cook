@@ -25,7 +25,9 @@ export const useGetAllUser = (options?: ParamsType) => {
   const queryClient = useQueryClient();
 
   const handleInvalidateUser = () =>
-    queryClient.invalidateQueries({ queryKey: [API_QUERY_KEYS.GET_ALL_USERS] });
+    queryClient.invalidateQueries({
+      queryKey: [API_QUERY_KEYS.GET_ALL_USERS, params],
+    });
 
   return {
     users,

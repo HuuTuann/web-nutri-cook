@@ -4,16 +4,22 @@ import { formatValueOrNull } from "@/lib/utils";
 import { Button, PreviewImage, Tag } from "@/modules/web-feature-shared";
 import { IngredientKey, IngredientPayload } from "@/queries";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Flex, Typography } from "antd";
+import { Flex } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { capitalize, startCase } from "lodash";
 
-export const allColumns = (): ColumnsType<IngredientPayload> => [
+type Props = (id: string) => void;
+export const allColumns = (
+  handleClick: Props,
+): ColumnsType<IngredientPayload> => [
   {
     title: "Name",
     dataIndex: IngredientKey.NAME,
     key: IngredientKey.NAME,
     width: 192,
+    onCell: (record) => ({
+      onClick: () => handleClick(record?.[IngredientKey.ID]),
+    }),
     render: (value) => formatValueOrNull(value),
   },
   {
@@ -21,6 +27,9 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.TYPE,
     key: IngredientKey.TYPE,
     width: 112,
+    onCell: (record) => ({
+      onClick: () => handleClick(record?.[IngredientKey.ID]),
+    }),
     render: (value: string) => (
       <Tag variant="default">
         {capitalize(startCase(value.replace(/_/g, " ")))}
@@ -32,6 +41,9 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.CALORIES,
     key: IngredientKey.CALORIES,
     width: 112,
+    onCell: (record) => ({
+      onClick: () => handleClick(record?.[IngredientKey.ID]),
+    }),
     render: (value) => formatValueOrNull(value),
   },
   {
@@ -39,6 +51,9 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.PROTEIN,
     key: IngredientKey.PROTEIN,
     width: 112,
+    onCell: (record) => ({
+      onClick: () => handleClick(record?.[IngredientKey.ID]),
+    }),
     render: (value) => formatValueOrNull(value),
   },
   {
@@ -46,6 +61,9 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.FAT,
     key: IngredientKey.FAT,
     width: 112,
+    onCell: (record) => ({
+      onClick: () => handleClick(record?.[IngredientKey.ID]),
+    }),
     render: (value) => formatValueOrNull(value),
   },
   {
@@ -53,6 +71,9 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.CARBS,
     key: IngredientKey.CARBS,
     width: 112,
+    onCell: (record) => ({
+      onClick: () => handleClick(record?.[IngredientKey.ID]),
+    }),
     render: (value) => formatValueOrNull(value),
   },
   {
@@ -60,24 +81,10 @@ export const allColumns = (): ColumnsType<IngredientPayload> => [
     dataIndex: IngredientKey.UNIT,
     key: IngredientKey.UNIT,
     width: 96,
+    onCell: (record) => ({
+      onClick: () => handleClick(record?.[IngredientKey.ID]),
+    }),
     render: (value) => formatValueOrNull(capitalize(value)),
-  },
-  {
-    title: "Description",
-    dataIndex: IngredientKey.DESCRIPTION,
-    key: IngredientKey.DESCRIPTION,
-    width: 256,
-    render: (value) => (
-      <Typography.Paragraph
-        ellipsis={{
-          rows: 1,
-          expandable: true,
-          symbol: "More",
-        }}
-      >
-        {formatValueOrNull(value)}
-      </Typography.Paragraph>
-    ),
   },
   {
     title: "Actions",

@@ -3,15 +3,19 @@ import { useEffect, useState } from "react";
 import "./styles.scss";
 import { Header } from "./Header";
 import { Sider } from "./Sider";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Paths } from "@/constants";
+import { removeAdminCookie } from "@/modules/web-feature-shared";
+import { useToastify } from "@/hooks/useToastify";
 
 type LayoutsProps = {
   children: React.ReactNode;
 };
 
 export const Layouts = ({ children }: LayoutsProps) => {
+  const router = useRouter();
   const pathname = usePathname();
+  const { toastify } = useToastify();
 
   const { Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
@@ -29,6 +33,12 @@ export const Layouts = ({ children }: LayoutsProps) => {
     }
   }, [pathname]);
 
+  const handleLogout = () => {
+    removeAdminCookie();
+    toastify.success("Logout success");
+    router.push("/login");
+  };
+
   return (
     <Layout>
       <Sider collapsed={collapsed}></Sider>
@@ -37,6 +47,7 @@ export const Layouts = ({ children }: LayoutsProps) => {
           collapsed={collapsed}
           setCollapsed={setCollapsed}
           heading={heading}
+          handleLogout={handleLogout}
         />
         <Content>{children}</Content>
       </Layout>

@@ -10,8 +10,11 @@ import { IngredientPayload, useGetAllIngredient } from "@/queries";
 import { allColumns } from "./allColumns";
 import { Toolbar } from "./Toolbar";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export const Ingredients = () => {
+  const router = useRouter();
+
   const {
     ingredients,
     isLoading,
@@ -34,6 +37,10 @@ export const Ingredients = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleClick = (id: string) => {
+    router.push(`/ingredients/${id}`);
+  };
+
   return (
     <Flex vertical gap={16}>
       <Toolbar
@@ -41,7 +48,7 @@ export const Ingredients = () => {
         setIngredientParams={setIngredientParams}
       />
       <Table<IngredientPayload>
-        columns={allColumns()}
+        columns={allColumns(handleClick)}
         dataSource={ingredients}
         pagination={{
           pageSize: pageSize,

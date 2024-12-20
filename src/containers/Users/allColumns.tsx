@@ -1,5 +1,4 @@
-import { DateFormat } from "@/constants";
-import { formatDate, formatValueOrNull } from "@/lib/utils";
+import { formatValueOrNull } from "@/lib/utils";
 import { UsersKey, UsersResponse } from "@/queries";
 import { ColumnsType } from "antd/es/table";
 import { getGenderLabel } from "./helpers";
@@ -7,6 +6,8 @@ import { Button, Flex } from "antd";
 import { DeleteUser } from "./Actions/DeleteUser";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { CreateEditUser } from "./CreateEditUser";
+import { capitalize, isEmpty, startCase } from "lodash";
+import { Tag } from "@/modules/web-feature-shared";
 
 export const allColumns = (): ColumnsType<UsersResponse> => [
   {
@@ -26,6 +27,54 @@ export const allColumns = (): ColumnsType<UsersResponse> => [
     dataIndex: UsersKey.FULL_NAME,
     key: UsersKey.FULL_NAME,
     render: (value) => formatValueOrNull(value),
+  },
+  {
+    title: "Nutrition Plan",
+    dataIndex: UsersKey.NUTRITION_PLAN,
+    key: UsersKey.NUTRITION_PLAN,
+    width: 192,
+    render: (value: string) => {
+      if (isEmpty(value)) {
+        return "--";
+      }
+      return (
+        <Tag variant="default">
+          {capitalize(startCase(value?.replace(/_/g, " ")))}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Diet Type",
+    dataIndex: UsersKey.DIET_TYPE,
+    key: UsersKey.DIET_TYPE,
+    width: 192,
+    render: (value: string) => {
+      if (isEmpty(value)) {
+        return "--";
+      }
+      return (
+        <Tag variant="default">
+          {capitalize(startCase(value?.replace(/_/g, " ")))}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Activity Factor",
+    dataIndex: UsersKey.ACTIVITY_FACTOR,
+    key: UsersKey.ACTIVITY_FACTOR,
+    width: 192,
+    render: (value: string) => {
+      if (isEmpty(value)) {
+        return "--";
+      }
+      return (
+        <Tag variant="default">
+          {capitalize(startCase(value?.replace(/_/g, " ")))}
+        </Tag>
+      );
+    },
   },
   {
     title: "Age",
@@ -50,18 +99,6 @@ export const allColumns = (): ColumnsType<UsersResponse> => [
     dataIndex: UsersKey.HEIGHT,
     key: UsersKey.HEIGHT,
     render: (value) => formatValueOrNull(value),
-  },
-  {
-    title: "Goal",
-    dataIndex: UsersKey.GOAL,
-    key: UsersKey.GOAL,
-    render: (value) => formatValueOrNull(value),
-  },
-  {
-    title: "Created At",
-    dataIndex: UsersKey.CREATED_AT,
-    key: UsersKey.CREATED_AT,
-    render: (value) => formatDate(value, DateFormat),
   },
   {
     title: "Actions",

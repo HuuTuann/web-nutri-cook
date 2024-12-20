@@ -8,8 +8,10 @@ export enum UsersKey {
   GENDER = "gender",
   WEIGHT = "weight",
   HEIGHT = "height",
-  GOAL = "goal",
   ROLE = "roles",
+  ACTIVITY_FACTOR = "activityFactor",
+  NUTRITION_PLAN = "nutritionPlan",
+  DIET_TYPE = "dietType",
   CREATED_AT = "createdAt",
 }
 
@@ -18,12 +20,14 @@ export interface UserPayload {
   [UsersKey.PASSWORD]: string;
   [UsersKey.EMAIL]: string;
   [UsersKey.FULL_NAME]: string;
-  [UsersKey.AGE]?: number;
-  [UsersKey.GENDER]?: number;
-  [UsersKey.WEIGHT]?: number;
-  [UsersKey.HEIGHT]?: number;
-  [UsersKey.GOAL]?: string;
-  [UsersKey.ROLE]?: string;
+  [UsersKey.AGE]: number;
+  [UsersKey.GENDER]: number | boolean;
+  [UsersKey.WEIGHT]: number;
+  [UsersKey.HEIGHT]: number;
+  [UsersKey.ROLE]: string[];
+  [UsersKey.ACTIVITY_FACTOR]: string;
+  [UsersKey.NUTRITION_PLAN]: string;
+  [UsersKey.DIET_TYPE]: string;
 }
 
 export interface UsersResponse extends UserPayload {
@@ -34,4 +38,31 @@ export interface UsersResponse extends UserPayload {
 export enum UserGender {
   FEMALE = 0,
   MALE = 1,
+}
+
+export enum UserDietType {
+  LOSS = "WEIGHT_LOSS",
+  MAINTAIN = "WEIGHT_MAINTAIN",
+  GAIN = "WEIGHT_GAIN",
+}
+
+export enum UserNutritionPlan {
+  DURABLE = "DURABLE",
+  HIGH_PROTEIN = "HIGH_PROTEIN",
+  LOW_CARB = "LOW_CARB",
+  BALANCED = "BALANCED",
+  AFTER_WEIGHT_LOSS = "AFTER_WEIGHT_LOSS",
+  MAINTAIN_MUSCLES = "MAINTAIN_MUSCLES",
+  HIGH_ENERGY = "HIGH_ENERGY",
+  BUILD_MUSCLE = "BUILD_MUSCLE",
+  ATHLETE = "ATHLETE",
+  CARDIO_TRAINING = "CARDIO_TRAINING",
+}
+
+export enum UserActivityFactor {
+  SEDENTARY = "SEDENTARY",
+  LIGHTLY_ACTIVE = "LIGHTLY_ACTIVE",
+  MODERATELY_ACTIVE = "MODERATELY_ACTIVE",
+  VERY_ACTIVE = "VERY_ACTIVE",
+  EXTRA_ACTIVE = "EXTRA_ACTIVE",
 }

@@ -29,6 +29,7 @@ import {
 import { DeleteOutlined } from "@ant-design/icons";
 import "./styles.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 type Props = {
   content: React.ReactNode;
@@ -36,6 +37,7 @@ type Props = {
 };
 
 export const CreateEditIngredient = ({ content, id }: Props) => {
+  const router = useRouter();
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
@@ -76,10 +78,12 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
 
   const { onCreateIngredient, isLoadingCreateIngredient } = useCreateIngredient(
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         handleCloseModal();
         handleInvalidateIngredient();
         toastify.success("Create ingredient success!");
+        // @ts-expect-error: TypeScript cannot infer the type of data?.data?.id
+        router.push(`/ingredients/${data?.data?.ingredient_ID}`);
       },
       onError: () => {
         toastify.error("Something went wrong! Please try again.");
@@ -138,7 +142,9 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 <Controller
                   name={IngredientKey.NAME}
                   control={control}
-                  render={({ field }) => <Input {...field} />}
+                  render={({ field }) => (
+                    <Input placeholder="Enter Ingredient Name" {...field} />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -154,8 +160,13 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 <Controller
                   name={IngredientKey.TYPE}
                   control={control}
-                  render={({ field }) => (
-                    <Select options={ingredientTypeOptions} {...field} />
+                  render={({ field: { value, ...props } }) => (
+                    <Select
+                      placeholder="Select type"
+                      value={isEmpty(value) ? undefined : value}
+                      options={ingredientTypeOptions}
+                      {...props}
+                    />
                   )}
                 />
               </Form.Item>
@@ -170,7 +181,9 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                 <Controller
                   name={IngredientKey.UNIT}
                   control={control}
-                  render={({ field }) => <Input {...field} />}
+                  render={({ field }) => (
+                    <Input placeholder="Enter Unit" {...field} />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -253,6 +266,7 @@ export const CreateEditIngredient = ({ content, id }: Props) => {
                   control={control}
                   render={({ field }) => (
                     <Input.TextArea
+                      placeholder="Enter Description"
                       autoSize={{
                         minRows: 3,
                         maxRows: 5,

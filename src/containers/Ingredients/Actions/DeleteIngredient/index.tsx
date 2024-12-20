@@ -2,14 +2,18 @@ import { useToastify } from "@/hooks/useToastify";
 import { Modal } from "@/modules/web-feature-shared";
 import { useDeleteIngredientById, useGetAllIngredient } from "@/queries";
 import { Flex } from "antd";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
   content: React.ReactNode;
   id: string;
+  isNavigate?: boolean;
 };
 
-export const DeleteIngredient = ({ content, id }: Props) => {
+export const DeleteIngredient = ({ content, id, isNavigate }: Props) => {
+  const router = useRouter();
+
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
@@ -32,6 +36,9 @@ export const DeleteIngredient = ({ content, id }: Props) => {
         setOpen(false);
         toastify.success("Ingredient deleted successfully");
         handleInvalidateIngredient();
+        if (isNavigate) {
+          router.push("/ingredients");
+        }
       },
       onError: () => {
         setOpen(false);

@@ -10,7 +10,7 @@
         rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
         rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 
-      & > .ant-btn {
+      & .ant-btn.collapse-button {
         color: var(--color-primary);
         font-size: 20px;
         border-radius: 50%;
@@ -26,8 +26,16 @@
           background-color: var(--color-primary) !important;
         }
       }
+      & .ant-btn.log-out-button {
+        color: #fff !important;
 
-      & > .heading {
+        &:hover {
+          color: var(--color-primary) !important;
+          background-color: #fff !important;
+        }
+      }
+
+      & .heading {
         color: #fff;
         font-size: 24px;
         font-weight: 600;

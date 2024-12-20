@@ -5,9 +5,11 @@ import { Form, Modal, Input, Flex, Row, Col, InputNumber } from "antd";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
-  defaultValues,
+  activityFactorOptions,
+  dietTypeOptions,
   genderOptions,
   getDefaultValue,
+  nutritionPlanOptions,
   userSchema,
 } from "./helpers";
 import {
@@ -18,7 +20,7 @@ import {
   useUpdateUserById,
 } from "@/queries";
 import { Select } from "@/modules/web-feature-shared";
-import { pickBy } from "lodash";
+import { isEmpty } from "lodash";
 import { useToastify } from "@/hooks/useToastify";
 
 type Props = {
@@ -30,13 +32,7 @@ export const CreateEditUser = ({ content, id }: Props) => {
   const { toastify } = useToastify();
   const [open, setOpen] = useState(false);
 
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
+  const { user } = useGetUserById({ id });
 
   const {
     control,
@@ -44,19 +40,26 @@ export const CreateEditUser = ({ content, id }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<UserPayload>({
-    defaultValues,
+    defaultValues: getDefaultValue(user),
     mode: "onSubmit",
     reValidateMode: "onChange",
     resolver: zodResolver(userSchema),
   });
 
-  const { user } = useGetUserById({ id });
-
   useEffect(() => {
-    if (id) {
+    if (user) {
       reset(getDefaultValue(user));
     }
-  }, [id, user, reset]);
+  }, [user, reset]);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    reset(getDefaultValue(user));
+  };
 
   const { handleInvalidateUser } = useGetAllUser();
 
@@ -73,11 +76,11 @@ export const CreateEditUser = ({ content, id }: Props) => {
   });
 
   const handleOk = (data: UserPayload) => {
-    const payload = pickBy({
+    const payload = {
       ...data,
       [UsersKey.ROLE]: ["USER"],
       [UsersKey.GENDER]: data[UsersKey.GENDER] === 1 ? true : false,
-    }) as unknown as UserPayload;
+    };
     onUpdateUser(payload);
   };
 
@@ -95,13 +98,13 @@ export const CreateEditUser = ({ content, id }: Props) => {
           <Row gutter={[8, 8]}>
             <Col span={12}>
               <Form.Item
-                label="Username"
-                validateStatus={errors[UsersKey.USERNAME] ? "error" : ""}
-                help={errors[UsersKey.USERNAME]?.message ?? ""}
+                label="Email"
+                validateStatus={errors[UsersKey.EMAIL] ? "error" : ""}
+                help={errors[UsersKey.EMAIL]?.message ?? ""}
                 required
               >
                 <Controller
-                  name={UsersKey.USERNAME}
+                  name={UsersKey.EMAIL}
                   control={control}
                   render={({ field }) => <Input {...field} />}
                 />
@@ -125,15 +128,21 @@ export const CreateEditUser = ({ content, id }: Props) => {
           <Row gutter={[8, 8]}>
             <Col span={12}>
               <Form.Item
-                label="Email"
-                validateStatus={errors[UsersKey.EMAIL] ? "error" : ""}
-                help={errors[UsersKey.EMAIL]?.message ?? ""}
+                label="Gender"
+                validateStatus={errors[UsersKey.GENDER] ? "error" : ""}
+                help={errors[UsersKey.GENDER]?.message ?? ""}
                 required
               >
                 <Controller
-                  name={UsersKey.EMAIL}
+                  name={UsersKey.GENDER}
                   control={control}
-                  render={({ field }) => <Input {...field} />}
+                  render={({ field }) => (
+                    <Select
+                      placeholder="Select a type"
+                      options={genderOptions}
+                      {...field}
+                    />
+                  )}
                 />
               </Form.Item>
             </Col>
@@ -199,19 +208,20 @@ export const CreateEditUser = ({ content, id }: Props) => {
           <Row gutter={[8, 8]}>
             <Col span={12}>
               <Form.Item
-                label="Gender"
-                validateStatus={errors[UsersKey.GENDER] ? "error" : ""}
-                help={errors[UsersKey.GENDER]?.message ?? ""}
+                label="Diet Type"
+                validateStatus={errors[UsersKey.DIET_TYPE] ? "error" : ""}
+                help={errors[UsersKey.DIET_TYPE]?.message ?? ""}
                 required
               >
                 <Controller
-                  name={UsersKey.GENDER}
+                  name={UsersKey.DIET_TYPE}
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { value, ...props } }) => (
                     <Select
-                      placeholder="Select a type"
-                      options={genderOptions}
-                      {...field}
+                      placeholder="Select Diet Type"
+                      options={dietTypeOptions}
+                      value={isEmpty(value) ? [] : value}
+                      {...props}
                     />
                   )}
                 />
@@ -219,15 +229,45 @@ export const CreateEditUser = ({ content, id }: Props) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Goal"
-                validateStatus={errors[UsersKey.GOAL] ? "error" : ""}
-                help={errors[UsersKey.GOAL]?.message ?? ""}
+                label="Activity Factor"
+                validateStatus={errors[UsersKey.ACTIVITY_FACTOR] ? "error" : ""}
+                help={errors[UsersKey.ACTIVITY_FACTOR]?.message ?? ""}
                 required
               >
                 <Controller
-                  name={UsersKey.GOAL}
+                  name={UsersKey.ACTIVITY_FACTOR}
                   control={control}
-                  render={({ field }) => <Input {...field} />}
+                  render={({ field: { value, ...props } }) => (
+                    <Select
+                      placeholder="Select Activity Factor"
+                      options={activityFactorOptions}
+                      value={isEmpty(value) ? [] : value}
+                      {...props}
+                    />
+                  )}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <Form.Item
+                label="Nutrition Plan"
+                validateStatus={errors[UsersKey.NUTRITION_PLAN] ? "error" : ""}
+                help={errors[UsersKey.NUTRITION_PLAN]?.message ?? ""}
+                required
+              >
+                <Controller
+                  name={UsersKey.NUTRITION_PLAN}
+                  control={control}
+                  render={({ field: { value, ...props } }) => (
+                    <Select
+                      placeholder="Select Nutrition Plan"
+                      options={nutritionPlanOptions}
+                      value={isEmpty(value) ? [] : value}
+                      {...props}
+                    />
+                  )}
                 />
               </Form.Item>
             </Col>
