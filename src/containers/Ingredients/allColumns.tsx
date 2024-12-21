@@ -2,11 +2,12 @@ import { DeleteIngredient } from "./Actions/DeleteIngredient";
 import { CreateEditIngredient } from "./CreateEditIngredient";
 import { formatValueOrNull } from "@/lib/utils";
 import { Button, PreviewImage, Tag } from "@/modules/web-feature-shared";
-import { IngredientKey, IngredientResponse } from "@/queries";
+import { IngredientKey, IngredientResponse, IngredientType } from "@/queries";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Flex, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { capitalize, startCase } from "lodash";
+import { capitalize } from "lodash";
+import { mapType } from "./helpers";
 
 type Props = (id: string) => void;
 export const allColumns = (
@@ -30,10 +31,8 @@ export const allColumns = (
     onCell: (record) => ({
       onClick: () => handleClick(record?.[IngredientKey.ID]),
     }),
-    render: (value: string) => (
-      <Tag variant="default">
-        {capitalize(startCase(value.replace(/_/g, " ")))}
-      </Tag>
+    render: (value: IngredientType) => (
+      <Tag variant="default">{mapType[value]}</Tag>
     ),
   },
   {

@@ -71,33 +71,33 @@ export const getDefaultValue = (recipe?: RecipePayload) => {
 };
 
 export const mealTypeOptions = [
-  { label: "Breakfast", value: RecipesMealType.BREAKFAST },
-  { label: "Lunch", value: RecipesMealType.LUNCH },
-  { label: "Dinner", value: RecipesMealType.DINNER },
-  { label: "Snack", value: RecipesMealType.SNACK },
+  { label: "Bữa sáng", value: RecipesMealType.BREAKFAST },
+  { label: "Bữa trưa", value: RecipesMealType.LUNCH },
+  { label: "Bữa tối", value: RecipesMealType.DINNER },
+  { label: "Bữa ăn nhẹ", value: RecipesMealType.SNACK },
 ];
 
 export const difficultyLevelOptions = [
-  { label: "Easy", value: RecipesDifficultyLevel.EASY },
-  { label: "Medium", value: RecipesDifficultyLevel.MEDIUM },
-  { label: "Hard", value: RecipesDifficultyLevel.HARD },
+  { label: "Dễ", value: RecipesDifficultyLevel.EASY },
+  { label: "Trung bình", value: RecipesDifficultyLevel.MEDIUM },
+  { label: "Khó", value: RecipesDifficultyLevel.HARD },
 ];
 
 export const nutritionalQuantityOptions = [
-  { label: "High Protein", value: RecipesNutritionalQuantity.HIGH_PROTEIN },
-  { label: "Low Protein", value: RecipesNutritionalQuantity.LOW_PROTEIN },
-  { label: "High Calorie", value: RecipesNutritionalQuantity.HIGH_CALORIE },
-  { label: "Low Calorie", value: RecipesNutritionalQuantity.LOW_CALORIE },
-  { label: "High Carb", value: RecipesNutritionalQuantity.HIGH_CARB },
-  { label: "Low Carb", value: RecipesNutritionalQuantity.LOW_CARB },
-  { label: "High Fat", value: RecipesNutritionalQuantity.HIGH_FAT },
-  { label: "Low Fat", value: RecipesNutritionalQuantity.LOW_FAT },
-  { label: "Balanced", value: RecipesNutritionalQuantity.BALANCED },
+  { label: "Nhiều đạm", value: RecipesNutritionalQuantity.HIGH_PROTEIN },
+  { label: "Ít đạm", value: RecipesNutritionalQuantity.LOW_PROTEIN },
+  { label: "Nhiều calorie", value: RecipesNutritionalQuantity.HIGH_CALORIE },
+  { label: "Ít calorie", value: RecipesNutritionalQuantity.LOW_CALORIE },
+  { label: "Nhiều carb", value: RecipesNutritionalQuantity.HIGH_CARB },
+  { label: "Ít carb", value: RecipesNutritionalQuantity.LOW_CARB },
+  { label: "Nhiều béo", value: RecipesNutritionalQuantity.HIGH_FAT },
+  { label: "Ít béo", value: RecipesNutritionalQuantity.LOW_FAT },
+  { label: "Cân bằng", value: RecipesNutritionalQuantity.BALANCED },
   { label: "Keto", value: RecipesNutritionalQuantity.KETO },
-  { label: "Vegan", value: RecipesNutritionalQuantity.VEGAN },
-  { label: "Vegetarian", value: RecipesNutritionalQuantity.VEGETARIAN },
+  { label: "Thuần chay", value: RecipesNutritionalQuantity.VEGAN },
+  { label: "Chay", value: RecipesNutritionalQuantity.VEGETARIAN },
   { label: "Paleo", value: RecipesNutritionalQuantity.PALEO },
-  { label: "Gluten Free", value: RecipesNutritionalQuantity.GLUTEN_FREE },
+  { label: "Không gluten", value: RecipesNutritionalQuantity.GLUTEN_FREE },
 ];
 
 export const formatIngredientList = (

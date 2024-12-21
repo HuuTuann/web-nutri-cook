@@ -13,7 +13,7 @@ export enum UsersKey {
   NUTRITION_PLAN = "nutritionPlan",
   DIET_TYPE = "dietType",
   CREATED_AT = "createdAt",
-  IS_ACTIVE = "isActive",
+  IS_ACTIVE = "active",
 }
 
 export interface UserPayload {

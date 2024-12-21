@@ -59,12 +59,12 @@ export interface RecipeResponse {
   [RecipeKey.PROTEIN]: number;
   [RecipeKey.FAT]: number;
   [RecipeKey.CARBS]: number;
-  [RecipeKey.MEAL_TYPE]: string[];
+  [RecipeKey.MEAL_TYPE]: RecipesMealType[] | string[];
   [RecipeKey.INGREDIENT_LIST]: IngredientSelectorType[];
   [RecipeKey.PREP_TIME]: number;
   [RecipeKey.COOK_TIME]: number;
-  [RecipeKey.DIFFICULTY_LEVEL]: string;
-  [RecipeKey.NUTRITIONAL_QUALITY]: string[];
+  [RecipeKey.DIFFICULTY_LEVEL]: RecipesDifficultyLevel | string;
+  [RecipeKey.NUTRITIONAL_QUALITY]: RecipesNutritionalQuantity[] | string[];
 }
 
 export enum RecipesMealType {

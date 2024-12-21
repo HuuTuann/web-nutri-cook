@@ -1,12 +1,22 @@
 import { formatValueOrNull } from "@/lib/utils";
 import { Button, PreviewImage, Tag } from "@/modules/web-feature-shared";
-import { RecipeKey, RecipeResponse } from "@/queries/Recipes/types";
+import {
+  RecipeKey,
+  RecipeResponse,
+  RecipesDifficultyLevel,
+  RecipesMealType,
+  RecipesNutritionalQuantity,
+} from "@/queries/Recipes/types";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Flex } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { CreateEditRecipe } from "./CreateEditRecipe";
 import { DeleteRecipe } from "./Actions/DeleteRecipe";
-import { capitalize, startCase } from "lodash";
+import {
+  mapDifficultyLevel,
+  mapMealType,
+  mapNutritionalQuality,
+} from "./helpers";
 
 type Props = (id: string) => void;
 
@@ -30,10 +40,8 @@ export const allColumns = (handleClick: Props): ColumnsType<RecipeResponse> => {
       onCell: (record) => ({
         onClick: () => handleClick(record?.[RecipeKey.ID]),
       }),
-      render: (value: string) => (
-        <Tag variant="default">
-          {capitalize(startCase(value.replace(/_/g, " ")))}
-        </Tag>
+      render: (value: RecipesDifficultyLevel) => (
+        <Tag variant="default">{mapDifficultyLevel[value]}</Tag>
       ),
     },
     {
@@ -44,11 +52,11 @@ export const allColumns = (handleClick: Props): ColumnsType<RecipeResponse> => {
       onCell: (record) => ({
         onClick: () => handleClick(record?.[RecipeKey.ID]),
       }),
-      render: (value: string[]) => (
+      render: (value: RecipesMealType[]) => (
         <Flex wrap="wrap" gap={8}>
           {value?.map((val, index) => (
             <Tag key={index} variant="default">
-              {capitalize(startCase(val.replace(/_/g, " ")))}
+              {mapMealType[val]}
             </Tag>
           ))}
         </Flex>
@@ -62,11 +70,11 @@ export const allColumns = (handleClick: Props): ColumnsType<RecipeResponse> => {
       onCell: (record) => ({
         onClick: () => handleClick(record?.[RecipeKey.ID]),
       }),
-      render: (value: string[]) => (
+      render: (value: RecipesNutritionalQuantity[]) => (
         <Flex wrap="wrap" gap={8}>
           {value?.map((val, index) => (
             <Tag key={index} variant="default">
-              {capitalize(startCase(val.replace(/_/g, " ")))}
+              {mapNutritionalQuality[val]}
             </Tag>
           ))}
         </Flex>

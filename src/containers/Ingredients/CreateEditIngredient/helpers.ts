@@ -44,11 +44,11 @@ export const getDefaultValue = (ingredient?: IngredientPayload) => {
 };
 
 export const ingredientTypeOptions = [
-  { label: "Vegetable", value: IngredientType.VEGETABLE },
-  { label: "Fruit", value: IngredientType.FRUIT },
-  { label: "Protein", value: IngredientType.PROTEIN },
-  { label: "Dairy", value: IngredientType.DAIRY },
-  { label: "Grain", value: IngredientType.GRAIN },
-  { label: "Spice", value: IngredientType.SPICE },
-  { label: "Other", value: IngredientType.OTHER },
+  { label: "Rau", value: IngredientType.VEGETABLE },
+  { label: "Trái cây", value: IngredientType.FRUIT },
+  { label: "Chất đạm", value: IngredientType.PROTEIN },
+  { label: "Sữa", value: IngredientType.DAIRY },
+  { label: "Ngũ cốc", value: IngredientType.GRAIN },
+  { label: "Gia vị", value: IngredientType.SPICE },
+  { label: "Khác", value: IngredientType.OTHER },
 ];

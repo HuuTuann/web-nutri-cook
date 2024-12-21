@@ -1,14 +1,14 @@
 "use client";
 
 import { Button, Col, Row, Tag } from "@/modules/web-feature-shared";
-import { IngredientKey, useGetIngredientById } from "@/queries";
+import { IngredientKey, IngredientType, useGetIngredientById } from "@/queries";
 import { Breadcrumb, Flex, Image, Tooltip, Typography } from "antd";
 import { useParams, useRouter } from "next/navigation";
 import { CreateEditIngredient } from "../CreateEditIngredient";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { DeleteIngredient } from "../Actions/DeleteIngredient";
 import "./styles.scss";
-import { capitalize, startCase } from "lodash";
+import { mapType } from "../helpers";
 
 const { Text } = Typography;
 
@@ -93,7 +93,7 @@ export const IngredientDetail = () => {
               <Col span={12}>
                 <Text strong>{`Type: `}</Text>
                 <Tag variant="default">
-                  {capitalize(startCase(ingredient?.[IngredientKey.TYPE]))}
+                  {mapType[ingredient?.[IngredientKey.TYPE] as IngredientType]}
                 </Tag>
               </Col>
               <Col span={12}>

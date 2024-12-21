@@ -4,15 +4,25 @@ import { Breadcrumb, Flex, Image } from "antd";
 import { Button, Col, Row, Tag } from "@/modules/web-feature-shared";
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
-import { RecipeKey, useGetRecipeById } from "@/queries";
+import {
+  RecipeKey,
+  RecipesDifficultyLevel,
+  RecipesMealType,
+  RecipesNutritionalQuantity,
+  useGetRecipeById,
+} from "@/queries";
 import { Typography } from "antd";
-import { capitalize, startCase } from "lodash";
 import { getCookingInstructions, getTime } from "./helpers";
 import { IngredientSelector } from "../IngredientSelector";
 import "./styles.scss";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { CreateEditRecipe } from "../CreateEditRecipe";
 import { DeleteRecipe } from "../Actions/DeleteRecipe";
+import {
+  mapDifficultyLevel,
+  mapMealType,
+  mapNutritionalQuality,
+} from "../helpers";
 
 const { Text, Paragraph } = Typography;
 
@@ -81,11 +91,13 @@ export const RecipeDetail = () => {
               <Col span={8}>
                 <Text strong>{`Difficulty Level: `}</Text>
                 <Tag variant="default">
-                  {capitalize(
-                    startCase(
-                      recipe?.[RecipeKey.DIFFICULTY_LEVEL].replace(/_/g, " "),
-                    ),
-                  )}
+                  {
+                    mapDifficultyLevel[
+                      recipe?.[
+                        RecipeKey.DIFFICULTY_LEVEL
+                      ] as RecipesDifficultyLevel
+                    ]
+                  }
                 </Tag>
               </Col>
               <Col span={8}>
@@ -103,7 +115,7 @@ export const RecipeDetail = () => {
                 <Flex gap={4}>
                   {recipe?.[RecipeKey.MEAL_TYPE]?.map((mealType, index) => (
                     <Tag key={index} variant="default">
-                      {capitalize(startCase(mealType.replace(/_/g, " ")))}
+                      {mapMealType[mealType as RecipesMealType]}
                     </Tag>
                   ))}
                 </Flex>
@@ -116,9 +128,11 @@ export const RecipeDetail = () => {
                   {recipe?.[RecipeKey.NUTRITIONAL_QUALITY]?.map(
                     (nutritionalQuality, index) => (
                       <Tag key={index} variant="default">
-                        {capitalize(
-                          startCase(nutritionalQuality.replace(/_/g, " ")),
-                        )}
+                        {
+                          mapNutritionalQuality[
+                            nutritionalQuality as RecipesNutritionalQuantity
+                          ]
+                        }
                       </Tag>
                     ),
                   )}

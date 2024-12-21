@@ -15,7 +15,7 @@ export enum IngredientKey {
 export interface IngredientPayload {
   [IngredientKey.ID]: string;
   [IngredientKey.NAME]: string;
-  [IngredientKey.TYPE]: string;
+  [IngredientKey.TYPE]: IngredientType | string;
   [IngredientKey.DESCRIPTION]: string;
   [IngredientKey.CALORIES]: number;
   [IngredientKey.PROTEIN]: number;
