@@ -25,10 +25,16 @@ export const userSchema = z.object({
   [UsersKey.ACTIVITY_FACTOR]: z.string().nonempty({
     message: "Activity factor is required",
   }),
-  [UsersKey.AGE]: z.number().int().positive(),
+  [UsersKey.AGE]: z.number().int().positive({
+    message: "Age must be a positive number",
+  }),
   [UsersKey.GENDER]: z.number().int(),
-  [UsersKey.WEIGHT]: z.number().int().positive(),
-  [UsersKey.HEIGHT]: z.number().int().positive(),
+  [UsersKey.WEIGHT]: z.number().int().positive({
+    message: "Weight must be a positive number",
+  }),
+  [UsersKey.HEIGHT]: z.number().int().positive({
+    message: "Height must be a positive number",
+  }),
 });
 
 export const getDefaultValue = (user?: UserPayload) => {

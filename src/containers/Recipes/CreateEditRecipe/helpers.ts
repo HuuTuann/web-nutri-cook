@@ -22,11 +22,11 @@ export const recipeSchema = z.object({
   [RecipeKey.MEAL_TYPE]: z.array(z.string()).nonempty({
     message: "Meal type is required",
   }),
-  [RecipeKey.PREP_TIME]: z.number().min(0, {
-    message: "Prep time is required",
+  [RecipeKey.PREP_TIME]: z.number().int().positive({
+    message: "Prep time be a positive number",
   }),
-  [RecipeKey.COOK_TIME]: z.number().min(0, {
-    message: "Cook time is required",
+  [RecipeKey.COOK_TIME]: z.number().int().positive({
+    message: "Cook time must be a positive number",
   }),
   [RecipeKey.DIFFICULTY_LEVEL]: z.string().nonempty({
     message: "Difficulty level is required",

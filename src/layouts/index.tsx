@@ -24,10 +24,12 @@ export const Layouts = ({ children }: LayoutsProps) => {
   useEffect(() => {
     if (pathname.startsWith(Paths.USERS)) {
       setHeading("Users");
+    } else if (pathname.startsWith(Paths.INGREDIENTS_DETAIL)) {
+      setHeading("Ingredient Detail");
     } else if (pathname.startsWith(Paths.INGREDIENTS)) {
       setHeading("Ingredients");
     } else if (pathname.startsWith(Paths.RECIPES_DETAIL)) {
-      setHeading("Recipes Detail");
+      setHeading("Recipe Detail");
     } else {
       setHeading("Recipes");
     }

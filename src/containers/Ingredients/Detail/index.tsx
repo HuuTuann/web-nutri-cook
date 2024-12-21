@@ -9,6 +9,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { DeleteIngredient } from "../Actions/DeleteIngredient";
 import "./styles.scss";
 import { mapType } from "../helpers";
+import { capitalize } from "lodash";
 
 const { Text } = Typography;
 
@@ -98,7 +99,7 @@ export const IngredientDetail = () => {
               </Col>
               <Col span={12}>
                 <Text strong>{`Unit: `}</Text>
-                <Text>{ingredient?.[IngredientKey.UNIT]}</Text>
+                <Text>{capitalize(ingredient?.[IngredientKey.UNIT])}</Text>
               </Col>
             </Row>
             <Row>
