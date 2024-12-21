@@ -13,6 +13,7 @@ export enum UsersKey {
   NUTRITION_PLAN = "nutritionPlan",
   DIET_TYPE = "dietType",
   CREATED_AT = "createdAt",
+  IS_ACTIVE = "isActive",
 }
 
 export interface UserPayload {
@@ -32,7 +33,13 @@ export interface UserPayload {
 
 export interface UsersResponse extends UserPayload {
   [UsersKey.ID]: string;
+  [UsersKey.IS_ACTIVE]: boolean;
   [UsersKey.CREATED_AT]: string;
+}
+
+export interface UserStatusPayload {
+  [UsersKey.ID]: string;
+  [UsersKey.IS_ACTIVE]: boolean;
 }
 
 export enum UserGender {

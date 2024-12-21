@@ -3,7 +3,7 @@ import {
   ParamsType,
   TableParams,
 } from "@/modules/web-feature-shared";
-import { IngredientPayload, API_QUERY_KEYS } from "@/queries";
+import { IngredientResponse, API_QUERY_KEYS } from "@/queries";
 import { getAllIngredient } from "./api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export const useGetAllIngredient = (options?: ParamsType) => {
   const [params, setParams] = useState<TableParams>({});
 
   const { data, isLoading } = useQuery<
-    PageResponseType<IngredientPayload>,
+    PageResponseType<IngredientResponse>,
     Error
   >({
     queryKey: [API_QUERY_KEYS.GET_ALL_INGREDIENTS, params],

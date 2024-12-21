@@ -14,7 +14,7 @@ import { useEffect } from "react";
 export const Users = () => {
   const {
     users,
-    isLoading,
+    isLoadingGetAllUser,
     pageSize = 0,
     totalRecords = 0,
     userParams,
@@ -46,7 +46,7 @@ export const Users = () => {
           total: totalRecords,
         }}
         onChange={handleTableChange}
-        loading={isLoading}
+        loading={isLoadingGetAllUser}
       />
     </Flex>
   );

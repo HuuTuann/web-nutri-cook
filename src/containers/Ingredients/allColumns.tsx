@@ -2,16 +2,16 @@ import { DeleteIngredient } from "./Actions/DeleteIngredient";
 import { CreateEditIngredient } from "./CreateEditIngredient";
 import { formatValueOrNull } from "@/lib/utils";
 import { Button, PreviewImage, Tag } from "@/modules/web-feature-shared";
-import { IngredientKey, IngredientPayload } from "@/queries";
+import { IngredientKey, IngredientResponse } from "@/queries";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Flex } from "antd";
+import { Flex, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { capitalize, startCase } from "lodash";
 
 type Props = (id: string) => void;
 export const allColumns = (
   handleClick: Props,
-): ColumnsType<IngredientPayload> => [
+): ColumnsType<IngredientResponse> => [
   {
     title: "Name",
     dataIndex: IngredientKey.NAME,
@@ -91,26 +91,37 @@ export const allColumns = (
     key: "actions",
     fixed: "right",
     width: 40,
-    render: (value) => {
+    render: (value: IngredientResponse) => {
       return (
         <Flex gap={8}>
-          <PreviewImage url={value[IngredientKey.IMAGE_URL]} />
+          <PreviewImage url={value?.[IngredientKey.IMAGE_URL]} />
           <CreateEditIngredient
             content={
               <Button type="default" size="small" icon={<EditOutlined />} />
             }
-            id={value[IngredientKey.ID]}
+            id={value?.[IngredientKey.ID]}
           />
           <DeleteIngredient
             content={
-              <Button
-                type="default"
-                danger
-                size="small"
-                icon={<DeleteOutlined />}
-              />
+              <Tooltip
+                title={
+                  value?.[IngredientKey.ACTIVE]
+                    ? "The item cannot be deleted because it is currently in use."
+                    : ""
+                }
+              >
+                <Flex>
+                  <Button
+                    type="default"
+                    danger
+                    size="small"
+                    icon={<DeleteOutlined />}
+                    disabled={value?.[IngredientKey.ACTIVE]}
+                  />
+                </Flex>
+              </Tooltip>
             }
-            id={value[IngredientKey.ID]}
+            id={value?.[IngredientKey.ID]}
           />
         </Flex>
       );

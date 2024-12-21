@@ -1,6 +1,6 @@
 import { httpService, ParamsType } from "@/modules/web-feature-shared";
 import { stringifyParams, TableParams } from "@/modules/web-feature-shared";
-import { UserPayload } from "@/queries";
+import { UserPayload, UserStatusPayload } from "@/queries";
 
 export const getAllUsers = (params: TableParams) => {
   const queryString = stringifyParams(params);
@@ -21,4 +21,9 @@ export const deleteUser = (id: string) => {
 
 export const updateUser = (id: string, payload: UserPayload) => {
   return httpService.put(`/user/${id}`, payload);
+};
+
+export const updateUserStatusUser = (payload: UserStatusPayload) => {
+  const { user_ID } = payload;
+  return httpService.put(`/user/${user_ID}`, payload);
 };

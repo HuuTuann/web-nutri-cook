@@ -6,7 +6,7 @@ import {
   Table,
   TablePaginationConfig,
 } from "@/modules/web-feature-shared";
-import { IngredientPayload, useGetAllIngredient } from "@/queries";
+import { IngredientResponse, useGetAllIngredient } from "@/queries";
 import { allColumns } from "./allColumns";
 import { Toolbar } from "./Toolbar";
 import { useEffect } from "react";
@@ -47,7 +47,7 @@ export const Ingredients = () => {
         ingredientParams={ingredientParams}
         setIngredientParams={setIngredientParams}
       />
-      <Table<IngredientPayload>
+      <Table<IngredientResponse>
         columns={allColumns(handleClick)}
         dataSource={ingredients}
         pagination={{

@@ -9,6 +9,7 @@ export enum IngredientKey {
   CARBS = "carbs",
   IMAGE_URL = "imageURL",
   UNIT = "unit",
+  ACTIVE = "active",
 }
 
 export interface IngredientPayload {
@@ -22,6 +23,10 @@ export interface IngredientPayload {
   [IngredientKey.CARBS]: number;
   [IngredientKey.IMAGE_URL]: string;
   [IngredientKey.UNIT]: string;
+}
+
+export interface IngredientResponse extends IngredientPayload {
+  [IngredientKey.ACTIVE]: boolean;
 }
 
 export enum IngredientType {

@@ -2,7 +2,7 @@
 
 import { Button, Col, Row, Tag } from "@/modules/web-feature-shared";
 import { IngredientKey, useGetIngredientById } from "@/queries";
-import { Breadcrumb, Flex, Image, Typography } from "antd";
+import { Breadcrumb, Flex, Image, Tooltip, Typography } from "antd";
 import { useParams, useRouter } from "next/navigation";
 import { CreateEditIngredient } from "../CreateEditIngredient";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -56,14 +56,25 @@ export const IngredientDetail = () => {
           <DeleteIngredient
             isNavigate
             content={
-              <Button
-                type="default"
-                size="middle"
-                danger
-                icon={<DeleteOutlined />}
+              <Tooltip
+                title={
+                  ingredient?.[IngredientKey.ACTIVE]
+                    ? "The item cannot be deleted because it is currently in use."
+                    : ""
+                }
               >
-                Delete
-              </Button>
+                <Flex>
+                  <Button
+                    type="default"
+                    size="middle"
+                    danger
+                    icon={<DeleteOutlined />}
+                    disabled={ingredient?.[IngredientKey.ACTIVE]}
+                  >
+                    Delete
+                  </Button>
+                </Flex>
+              </Tooltip>
             }
             id={ingredient?.[IngredientKey.ID]}
           />

@@ -3,11 +3,11 @@ import { UsersKey, UsersResponse } from "@/queries";
 import { ColumnsType } from "antd/es/table";
 import { getGenderLabel } from "./helpers";
 import { Button, Flex } from "antd";
-import { DeleteUser } from "./Actions/DeleteUser";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { CreateEditUser } from "./CreateEditUser";
 import { capitalize, isEmpty, startCase } from "lodash";
 import { Tag } from "@/modules/web-feature-shared";
+import { ChangeStatusUser } from "./Actions/ChangeStatusUser";
 
 export const allColumns = (): ColumnsType<UsersResponse> => [
   {
@@ -105,26 +105,19 @@ export const allColumns = (): ColumnsType<UsersResponse> => [
     key: "actions",
     fixed: "right",
     width: 40,
-    render: (value) => {
+    render: (user: UsersResponse) => {
       return (
-        <Flex gap={8}>
+        <Flex gap={8} align="center">
           <CreateEditUser
             content={
               <Button type="default" size="small" icon={<EditOutlined />} />
             }
-            id={value[UsersKey.ID]}
+            id={user[UsersKey.ID]}
           />
-          <DeleteUser
-            content={
-              <Button
-                type="default"
-                danger
-                size="small"
-                icon={<DeleteOutlined />}
-                disabled
-              />
-            }
-            id={value[UsersKey.ID]}
+
+          <ChangeStatusUser
+            id={user[UsersKey.ID]}
+            status={user[UsersKey.IS_ACTIVE]}
           />
         </Flex>
       );

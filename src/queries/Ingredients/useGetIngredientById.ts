@@ -1,5 +1,5 @@
 import { ParamsType, ResponseType } from "@/modules/web-feature-shared";
-import { API_QUERY_KEYS, IngredientPayload } from "@/queries";
+import { API_QUERY_KEYS, IngredientResponse } from "@/queries";
 import { getIngredientDetail } from "@/queries/Ingredients/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -9,9 +9,9 @@ export function useGetIngredientById(
   },
 ) {
   const { data, isLoading } = useQuery<
-    ResponseType<IngredientPayload>,
+    ResponseType<IngredientResponse>,
     Error,
-    ResponseType<IngredientPayload>
+    ResponseType<IngredientResponse>
   >({
     queryKey: [API_QUERY_KEYS.GET_INGREDIENTS_DETAIL, options?.id],
     queryFn: async () => getIngredientDetail({ ...options }),
@@ -27,7 +27,7 @@ export function useGetIngredientById(
     });
 
   return {
-    ingredient: data?.data as IngredientPayload,
+    ingredient: data?.data as IngredientResponse,
     isLoading,
     handleInvalidateIngredientById,
   };

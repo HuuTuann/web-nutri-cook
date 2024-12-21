@@ -31,7 +31,7 @@ export const useGetAllUser = (options?: ParamsType) => {
 
   return {
     users,
-    isLoading,
+    isLoadingGetAllUser: isLoading,
     pageNo,
     pageSize,
     totalRecords,

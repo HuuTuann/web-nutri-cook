@@ -12,9 +12,6 @@ export const userSchema = z.object({
   [UsersKey.USERNAME]: z.string().nonempty({
     message: "Username is required",
   }),
-  [UsersKey.PASSWORD]: z.string().nonempty({
-    message: "Password is required",
-  }),
   [UsersKey.EMAIL]: z.string().email(),
   [UsersKey.FULL_NAME]: z.string().nonempty({
     message: "Full name is required",
